@@ -1,0 +1,15 @@
+<ng-template #star let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+    </span>
+</ng-template>
+
+<ngb-rating [(rate)]="currentRate" [starTemplate]="star" [readonly]="true" [max]="5"></ngb-rating>
+
+<div class="star-label">
+    <span *ngIf="currentRate===0">brak ocen</span>
+    <span *ngIf="currentRate!==0">średnia ocena: <b>{{currentRate | number: '1.1-2'}}</b></span>
+</div>
+<div class="star-label">
+    <span *ngIf="votesNumber!==0">Liczba ocen: <b>{{votesNumber}}</b></span>
+</div>

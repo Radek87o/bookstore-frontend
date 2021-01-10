@@ -1,0 +1,21 @@
+<a routerLink="/ksiazka/{{book.id}}" class="image">
+        <img [src]="book.imageUrl">
+    </a>
+
+
+<div class="content">
+    
+        <a routerLink="/ksiazka/{{book.id}}" class="ui sub header center aligned title" [title]="book.title">
+            {{book.title | titleTrimmer}}
+        </a>
+    
+    <div class="description center aligned price-label subtitle">{{book.author.firstName}} {{book.author.lastName}}</div>
+    <div class="content center aligned price-label">Nasza cena:</div>
+    <div class="header center aligned price-label">{{book.basePrice | priceDisplay}} zł</div>
+    <div class="extra content center aligned">
+        <button class="ui small red button">
+            <i class="shopping cart icon"></i>
+            <span>Do koszyka</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="ui segment">
+  <div class="ui items concentrated">
+    <div class="ui item">
+      <div class="ui medium image">
+        <img [src]="book.imageUrl">
+      </div>
+      <div class="content">
+        <h1 class="ui huge header">{{book.title}}</h1>
+        <div class="meta">
+          <p>{{book.subtitle}}</p>
+        </div>
+        <a class="header">
+          {{book.author?.firstName}} {{book.author?.lastName}}
+        </a>
+        <div class="meta" *ngIf="!activeRating">
+          <app-rating-decimal></app-rating-decimal>
+          <button class="ui red button tiny" (click)="activeRating=true">
+            <i class="star icon"></i>
+            <span>Oceń książkę</span>
+          </button>
+        </div>
+        <div class="meta" *ngIf="activeRating">
+          <app-rating-form></app-rating-form>
+          <button class="ui red button tiny" (click)="activeRating=false">
+            <i class="sign out alternate icon"></i>
+            <span>Wróc do ocen</span>
+          </button>
+        </div>
+        <div class="meta">
+          <span>Okładka: {{book.hardcover ? 'twarda' : 'miękka'}}</span>
+        </div>
+        <div class="meta">
+          <span>Liczba stron: {{extractPagesNumber(book)}}</span>
+        </div>
+        <ng-container [ngSwitch]="availabilityState">
+          <div class="meta" *ngSwitchCase="0">
+            <p>
+              <i class="shipping fast icon"></i>
+              <label class="available">Produkt dostępny</label>
+            </p>
+          </div>
+          <div class="meta" *ngSwitchCase="1">
+            <p>
+              <i class="warehouse icon"></i>
+              <label class="warehouse">Produkt w magazynie - dostępny w ciągu 2 dni</label>
+            </p>
+          </div>
+          <div class="meta" *ngSwitchCase="2">
+            <p>
+              <i class="lock icon"></i>
+              <label class="unavailable">Produkt niedostępny</label>
+            </p>
+          </div>  
+        </ng-container>
+        <div class="meta" *ngIf="book.categories?.length>0">
+          <p>
+            Kategorie:
+          </p>
+          <ul>
+            <li class="categoriesItem" *ngFor="let category of book.categories">
+              <a>{{category.name}}</a>
+            </li>
+          </ul> 
+        </div>
+        <div class="header">
+          <i class="tag icon"></i>
+          {{book.basePrice | priceDisplay}} zł
+        </div>
+        <div class="extra">
+            <button class="ui red button" [disabled]="availabilityState===2">
+              <i class="shopping cart icon"></i>
+              <span>Do koszyka</span>
+            </button>
+            <button class="ui black button" (click)="back()">
+              <i class="ui undo icon"></i>
+              <span>Wróć</span>
+            </button>
+        </div>
+      </div>
+  </div>
+  <div class="ui top attached tabular menu">
+    <a class="item" [class.active]="!showComments" (click)="hideCommentsSection()">Opis</a>
+    <a class="item" [class.active]="showComments" (click)="showCommentsSection()">Recenzje</a>
+  </div>
+  <div class="ui bottom attached active tab segment">
+    <ng-container></ng-container>
+    <div *ngIf="!showComments">
+      <p *ngFor="let paragraph of book.description">
+        {{paragraph}}
+      </p>
+      <div *ngIf="book.description?.length===0">
+        <p>
+          Ta książka nie ma jeszcze opisu.
+        </p>
+        <p>
+          Wkrótce zostanie on dodany.
+        </p>  
+      </div>  
+    </div>
+    <app-comments-list *ngIf="showComments"></app-comments-list>
+  </div>
+</div>

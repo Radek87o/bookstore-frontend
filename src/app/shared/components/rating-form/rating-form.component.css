@@ -1,0 +1,31 @@
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    color: #d3d3d3;
+}
+
+.full {
+    color: gold;
+}
+
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: gold;
+    height: 125%;
+}
+
+.star-label {
+    margin-top: 0.5em;
+    margin-bottom: 1em;   
+}
+
+.negative {
+    color: crimson;   
+}
+
+.positive {
+    color: green;   
+}

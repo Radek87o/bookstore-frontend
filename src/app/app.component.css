@@ -1,0 +1,6 @@
+.ui.container {
+    min-height: 100vh;
+    height: auto;
+    background: white;
+    color: black;
+}

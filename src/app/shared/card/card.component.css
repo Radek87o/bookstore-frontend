@@ -1,0 +1,16 @@
+:host {
+    width: 150px;
+    margin: 5px;
+}
+
+.title {
+    height: 30px;
+}
+
+.subtitle {
+    height: 25px;
+}
+
+.price-label {
+    margin-bottom: 0.5em;
+}

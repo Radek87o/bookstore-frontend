@@ -1,0 +1,39 @@
+<div class="ui comments">
+    <h3 class="ui dividing header">Komentarze</h3>
+    <div *ngIf="bookComments?.length===0">
+      <div class="content">
+        <div class="text">
+          Ta książka nie ma jeszcze komentarzy. Bądź pierwszą osobą, która doda komentarz
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="bookComments?.length>0">
+      <div class="comment" *ngFor="let comment of bookComments">
+        <a class="avatar">
+          <img src="/assets/images/user1-64x64.png">
+        </a>
+        <div class="content">
+          <a class="author">{{comment.usernameToDisplay}}</a>
+          <div class="metadata">
+            <span class="date">{{comment.updateDate | date: 'yyyy-MM-dd HH:mm'}}</span>
+          </div>
+          <div class="text">
+            {{comment.content}}
+          </div>
+          <div class="actions">
+            <a class="reply"></a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <form class="ui reply form" [formGroup]="commentsForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+          <app-text-area [control]="commentsForm.get('content')"></app-text-area>
+      </div>
+      <div *ngIf="commentSaved" class="ui green message">Komentarz został zapisany</div>
+      <div *ngIf="commentSavedError" class="ui red message">Komentarz został zapisany</div>
+      <button [disabled]="commentsForm.invalid" type="submit" class="ui blue labeled submit icon button">   
+              <i class="icon edit"></i> Dodaj komentarz
+      </button>
+  </form>
+  </div>

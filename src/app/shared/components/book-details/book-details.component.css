@@ -1,0 +1,27 @@
+@media only screen and (min-width: 1000px) {
+    .concentrated {
+        margin-left: 10em;
+        margin-right: 10em;
+    }
+}
+
+.available {
+    background-color: mediumspringgreen;
+}
+
+.warehouse {
+    background-color: moccasin;
+}
+
+.unavailable {
+    background-color: salmon;
+}
+
+/* .ui.tab.segment {
+    min-height: 500px;
+} */
+
+.categoriesItem {
+    padding-bottom: 0.5em;
+}
+
