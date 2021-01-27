@@ -1,0 +1,24 @@
+<div class="field" [ngClass]="{'error': showErrors()}">
+    <label class="label">{{label}}</label>
+    <input [formControl]="control" placeholder="{{placeholder}}"/>
+    <ng-container *ngIf="control.invalid  && control.touched && control.dirty">
+        <div class="ui small error message" *ngIf="control.errors.required">
+            To pole nie może być puste
+        </div>
+        <div class="ui small error message" *ngIf="control.errors.minlength">
+            To pole musi mieć co najmniej {{control.errors.minlength.requiredLength}} znaki
+        </div>
+        <div class="ui small error message" *ngIf="control.errors.maxlength">
+            To pole może mieć maksymalnie {{control.errors.maxlength.required}} znaków, a obecnie ma {{control.errors.maxlength.actualLength}} znaków.
+        </div>
+        <div class="ui small error message" *ngIf="control.errors.pattern">
+            Podana wartość: {{control.errors.pattern.actualValue}} jest niezgodna z dozwolonym formatem.
+        </div>
+        <div class="ui small error message" *ngIf="control.errors.min">
+            Podana wartość: {{control.errors.min.actual}} jest niższa niż minimalna wartość pola: {{control.errors.min.min}}.
+        </div>
+        <div class="ui small error message" *ngIf="control.errors.max">
+            Podana wartość: {{control.errors.max.actual}} jest wyższa niż maksymalna wartość pola: {{control.errors.max.max}}.
+        </div>
+    </ng-container>
+</div>

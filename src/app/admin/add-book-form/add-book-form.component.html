@@ -1,0 +1,87 @@
+<div class="ui segment">
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+        <div class="ui form error success">
+            <div class="three fields">
+                <div class="field">
+                    <app-input [control]="bookForm.get('title')" label="Tytuł"></app-input>
+                </div>
+                <div class="field">
+                    <app-input [control]="bookForm.get('subtitle')" label="Podtytuł"></app-input>
+                </div>
+                <div class="field">
+                    <app-input [control]="bookForm.get('imageUrl')" label="Link do okładki" placeholder="Wpisz url"></app-input>    
+                </div>
+            </div>
+            <div class="three fields">
+                <div class="field">
+                    <app-input [control]="bookForm.get('authorFirstName')" label="Imię autora"></app-input>
+                </div>
+                <div class="field">
+                    <app-input [control]="bookForm.get('authorLastName')" label="Nazwisko autora"></app-input>
+                </div>
+                <div class="field">
+                    <app-input [control]="bookForm.get('issueYear')" label="Rok wydania"></app-input>
+                </div>
+            </div>
+            <div class="field">
+                <label>Opis książki</label>
+                <app-text-area [control]="bookForm.get('description')"></app-text-area>
+            </div>
+            <div class="three fields">
+                <div class="field">
+                    <app-input [control]="bookForm.get('pages')" label="Liczba stron"></app-input>
+                </div>
+                <div class="field">
+                    <app-input [control]="bookForm.get('basePrice')" label="Cena standardowa" 
+                                placeholder="Cena w PLN"></app-input>
+                </div>
+                <div class="field">
+                    <app-input [control]="bookForm.get('promoPrice')" label="Cena Promocyjna"
+                                placeholder="Cena w PLN"></app-input>
+                </div>
+            </div>
+            <div class="three fields">
+                <div class="field">
+                    <label>Kategorie (wybierz co najmniej jedną):</label>
+                    <select multiple="true" [formControl]="bookForm.get('categories')">
+                        <ng-container *ngFor="let category of categories">
+                            <option [value]="category">{{category.name}}</option>
+                        </ng-container>
+                    </select>
+                    <div *ngIf="isFormInvalid(bookForm.get('categories'))" class="ui small error message">
+                        To pole nie może być puste
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Rodzaj okładki</label>
+                    <select class="ui search dropdown" [formControl]="bookForm.get('isHardcover')">
+                        <option value=""></option>
+                        <option value=false>Miękka</option>
+                        <option value=true>Twarda</option>
+                    </select>
+                    <div *ngIf="isFormInvalid(bookForm.get('isHardcover'))" class="ui small error message">
+                        To pole nie może być puste
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <app-input [control]="bookForm.get('unitsInStock')" label="Liczba dostępnych egzemplarzy"></app-input>
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" [formControl]="bookForm.get('active')">
+                    <label>Sprzedaż aktywna</label>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="bookAdded" class="ui success message">Książka została zapisana</div>
+        <div *ngIf="bookAddedInvalid" class="ui error message">Wystąpił błąd przy próbie dodania książki</div>
+        <div style="text-align: center">
+            <button class="positive ui submit button" [disabled]="bookForm.invalid" type="submit">Dodaj książkę</button>
+            <button class="ui button" type="button" (click)="onResetForm()">Wyczyść formularz</button>
+        </div>
+    </form>
+    
+</div>

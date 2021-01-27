@@ -8,6 +8,7 @@ import { CommentsListComponent } from './shared/components/comments-list/comment
 const routes: Routes = [
   { path: 'nowosci', loadChildren: ()=>import('./novelties/novelties.module').then(m=>m.NoveltiesModule)},
   { path: 'promocje', loadChildren: ()=>import('./promos/promos.module').then(m=>m.PromosModule)},
+  { path: 'admin', loadChildren: ()=>import('./admin/admin.module').then(m=>m.AdminModule)},
   { 
     path: 'ksiazka/:id', 
     component: BookDetailsComponent,

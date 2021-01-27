@@ -26,7 +26,7 @@
         </div>
       </div>
     </ng-container>
-    <form class="ui reply form" [formGroup]="commentsForm" (ngSubmit)="onSubmit()">
+    <form class="ui reply form error" [formGroup]="commentsForm" (ngSubmit)="onSubmit()">
       <div class="field">
           <app-text-area [control]="commentsForm.get('content')"></app-text-area>
       </div>

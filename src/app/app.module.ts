@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from '@angular/forms';
  
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { InputComponent } from './input/input.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
@@ -19,7 +18,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
   declarations: [
     AppComponent,
     HeaderComponent,
-    InputComponent,
     SearchInputComponent,
     MenuComponent,
     HomeComponent,

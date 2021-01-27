@@ -13,18 +13,19 @@ import { CommentsListComponent } from './components/comments-list/comments-list.
 import { CommentsFormComponent } from './components/comments-form/comments-form.component';
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { RatingFormComponent } from './components/rating-form/rating-form.component';
+import { InputComponent } from './components/input/input.component';
 
 
 
 @NgModule({
-  declarations: [CardComponent, TitleTrimmerPipe, PriceDisplayPipe, BookDetailsComponent, RatingDecimalComponent, CommentsListComponent, CommentsFormComponent, TextAreaComponent, RatingFormComponent],
+  declarations: [CardComponent, TitleTrimmerPipe, PriceDisplayPipe, BookDetailsComponent, RatingDecimalComponent, CommentsListComponent, CommentsFormComponent, TextAreaComponent, RatingFormComponent, InputComponent],
   imports: [
     CommonModule,
     RouterModule,
     NgbModule,
     ReactiveFormsModule
   ],
-  exports: [CardComponent, RatingDecimalComponent],
+  exports: [CardComponent, RatingDecimalComponent, InputComponent, TextAreaComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }
