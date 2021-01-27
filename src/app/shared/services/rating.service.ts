@@ -15,8 +15,7 @@ export class RatingService {
   constructor(private http: HttpClient) { }
 
   getBookRatings(bookId: string): Observable<Rating[]> {
-    let queryParams = new HttpParams().set("bookId", bookId);
-    return this.http.get<Rating[]>(`${this.baseUrl}`, {params: queryParams});
+    return this.http.get<Rating[]>(`${this.baseUrl}/${bookId}`);
   }
 
   getBookRating(bookId: string, userId: string): Observable<Rating> {

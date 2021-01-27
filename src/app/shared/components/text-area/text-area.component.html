@@ -1,14 +1,14 @@
-<div [ngClass]="{'field error': showErrors()}">
+<div class="field" [ngClass]="{'error': showErrors()}">
     <textarea class="input" [formControl]="control"></textarea>
     <ng-container *ngIf="showErrors()">
-        <div class="ui small red message" *ngIf="control.errors.required">
-            Komentarz musi mieć treść.
+        <div class="ui small error message" *ngIf="control.errors.required">
+            Pole musi mieć treść.
         </div>
-        <div class="ui small red message" *ngIf="control.errors.minlength">
-            Komentarz musi mieć co najmniej {{control.errors.minlength.requiredLength}} znaki.
+        <div class="ui small error message" *ngIf="control.errors.minlength">
+            Treść musi mieć co najmniej {{control.errors.minlength.requiredLength}} znaki.
         </div>
-        <div class="ui small red message" *ngIf="control.errors.maxlength">
-            Komentarz ma obecnie {{control.errors.maxlength.actualLength}} znaków, natomiast nie może mieć więcej niż 
+        <div class="ui small error message" *ngIf="control.errors.maxlength">
+            Treść ma obecnie {{control.errors.maxlength.actualLength}} znaków, natomiast nie może mieć więcej niż 
             {{control.errors.maxlength.requiredLength}} znaków.
         </div>
     </ng-container>
