@@ -1,11 +1,11 @@
 <div class="ui segment">
-    <div class="ui middle aligned centered grid">
-        <div class="four wide column">
+    <div class="ui middle aligned centered stackable grid">
+        <div class="computer only four wide column">
             <a routerLinkActive="active" routerLink="/">
                 <img class="ui small centered rounded image" src="/assets/images/companyYourLogo.png">
             </a>
         </div>
-        <div class="six wide column">
+        <div class="computer only eight wide column">
             <div class="ui search">
                 <app-search-input></app-search-input>
                 <div class="results">
@@ -13,17 +13,42 @@
                 </div>
             </div>
         </div>
-        <div class="three wide column">
-            <button class="big fluid basic ui button">
+        <div class="computer only two wide column">
+            <button class="fluid basic ui button">
                 <i class="icon user"></i>
-                <span>Zaloguj się</span>
             </button>
         </div>
-        <div class="three wide column">
-            <button class="big fluid basic ui button">
+
+        <div class="computer only two wide column">
+            <button class="fluid basic ui button">
                 <i class="shopping cart icon"></i>
-                <span>Koszyk</span>
             </button>
+        </div>
+    </div>
+    <div class="ui middle aligned centered grid">
+        <div class="tablet only mobile only four wide column">
+            <a routerLinkActive="active" routerLink="/">
+                <img class="ui small centered rounded image" src="/assets/images/companyYourLogo.png">
+            </a>
+        </div>
+        <div class="tablet only mobile only four wide column">
+            <button class="fluid basic ui button">
+                <i class="icon user"></i>
+            </button>
+        </div>
+        <div class="tablet only mobile only four wide column">
+            <button class="fluid basic ui button">
+                <i class="shopping cart icon"></i>
+            </button>
+        </div>  
+    </div>
+    <div class="ui middle aligned centered grid">
+        <div class="tablet mobile only sixteen wide column">
+            <div class="ui search">
+                <app-search-input></app-search-input>
+                <div class="results">
+                </div>
+            </div>
         </div>
     </div>
 </div>
