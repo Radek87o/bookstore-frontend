@@ -4,6 +4,8 @@ import { Book } from '../../model/book';
 import { AvailabilityState } from '../../model/availability-state.enum';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-book-details',
@@ -23,7 +25,14 @@ export class BookDetailsComponent implements OnInit {
 
       const currentId = this.route.snapshot.paramMap.get('id');
 
-      this.bookService.getBook(currentId).subscribe(data => {
+      const bookObservable: Observable<Book> = this.route.paramMap.pipe(
+        switchMap((params, ParamMap)=>{
+          const id = params.get('id');
+          return this.bookService.getBook(id);
+        })
+      );
+
+      bookObservable.subscribe(data => {
         this.book=data;
         this.availabilityState=this.determineAvailabilityState(this.book);
       });

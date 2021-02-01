@@ -16,7 +16,8 @@ const routes: Routes = [
       { path: 'recenzje', component: CommentsListComponent }
     ]
    },
-  { path: '', component: HomeComponent },
+   { path: 'szukaj/:keyword', component: HomeComponent },
+   { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent }
 ];
  
