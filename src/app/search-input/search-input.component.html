@@ -1,6 +1,46 @@
-<div class="ui fluid action input">
-  <input type="text" placeholder="Szukaj książki...">
-  <button class="ui red icon button">
-    <i class="search icon"></i>
-  </button>
+<div class="ui search fluid action input">
+  <input #searchInput type="text"
+          class="form-control"
+          placeholder="Szukaj książki..."
+          (keyup.enter)="findBookByKeyword(searchInput.value)"
+          (keyup)="displayKeywordProposals($event)">
+    <button class="ui red icon button" (click)="findBookByKeyword(searchInput.value)">
+      <i class="search icon"></i>
+    </button>
+    <div class="results" id="searchResults" *ngIf="searchInput.value">
+      <div class="ui divided items">
+        <div class="item" *ngFor="let book of books" routerLink="/ksiazka/{{book.id}}" (click)="clearResults()">
+          <div class="ui tiny image">
+            <img [src]="book.imageUrl" style="width: 2.5rem; margin-left: 2rem;">
+          </div>
+          <div class="content">
+            <div class="ui grid">
+              <div class="ten wide column">
+                <div class="header">
+                  <div style="font-weight: bold;">
+                    {{book.title | titleTrimmer}}
+                  </div>
+                </div>
+                <div class="description">
+                  {{book.author.firstName}} {{book.author.lastName}}
+                </div>
+              </div>
+              <div class="six wide column">
+                <div class="header">
+                  <div class="ui right floated">
+                    <div style="font-weight: bold; justify-content: center;">
+                      {{book.basePrice | priceDisplay}} zł
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>  
+      </div>   
 </div>
+
+
+
+

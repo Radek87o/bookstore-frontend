@@ -1,4 +1,12 @@
 <div class="ui segment">
+    <div style="margin-bottom: 1.5rem;">
+        <h3 class="ui dividing header" *ngIf="searchMode">
+            Wynik wyszukiwania dla frazy: {{keyword}}
+        </h3>
+        <h3 class="ui dividing header" *ngIf="!searchMode">
+            Ostatnio dodane książki
+        </h3>
+    </div>
     <div class="ui stackable six cards">
         <ng-container>
             <app-card class="ui fluid card" *ngFor="let book of books" [book]="book"></app-card>           

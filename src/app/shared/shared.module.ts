@@ -17,6 +17,7 @@ import { InputComponent } from './components/input/input.component';
 
 
 
+
 @NgModule({
   declarations: [CardComponent, TitleTrimmerPipe, PriceDisplayPipe, BookDetailsComponent, RatingDecimalComponent, CommentsListComponent, CommentsFormComponent, TextAreaComponent, RatingFormComponent, InputComponent],
   imports: [
@@ -25,7 +26,7 @@ import { InputComponent } from './components/input/input.component';
     NgbModule,
     ReactiveFormsModule
   ],
-  exports: [CardComponent, RatingDecimalComponent, InputComponent, TextAreaComponent],
+  exports: [CardComponent, RatingDecimalComponent, InputComponent, TextAreaComponent, TitleTrimmerPipe, PriceDisplayPipe],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }
