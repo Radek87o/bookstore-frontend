@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../shared/model/category';
+import { CategoryService } from '../shared/services/category.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  categories: Category[] = [];
+
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.populateCategories();
+  }
+
+  populateCategories() {
+    this.categoryService.getCategoriesList().subscribe(
+      data => {
+        this.categories=data;
+      }
+    )
   }
 
 }

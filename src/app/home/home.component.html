@@ -3,7 +3,10 @@
         <h3 class="ui dividing header" *ngIf="searchMode">
             Wynik wyszukiwania dla frazy: {{keyword}}
         </h3>
-        <h3 class="ui dividing header" *ngIf="!searchMode">
+        <h3 class="ui dividing header" *ngIf="categoryMode">
+            Ksiażki z kategorii: {{categoryName}}
+        </h3>
+        <h3 class="ui dividing header" *ngIf="!searchMode && !categoryName">
             Ostatnio dodane książki
         </h3>
     </div>

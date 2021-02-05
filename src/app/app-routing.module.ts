@@ -17,6 +17,7 @@ const routes: Routes = [
     ]
    },
    { path: 'szukaj/:keyword', component: HomeComponent },
+   { path: 'kategoria/:categoryId', component: HomeComponent },
    { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent }
 ];
