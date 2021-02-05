@@ -23,8 +23,6 @@ export class BookDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-      const currentId = this.route.snapshot.paramMap.get('id');
-
       const bookObservable: Observable<Book> = this.route.paramMap.pipe(
         switchMap((params, ParamMap)=>{
           const id = params.get('id');

@@ -6,9 +6,10 @@
       Kategorie
       <i class="dropdown icon"></i>
       <div class="menu">
-        <div class="item">Dla Dzieci i młodzieży</div>
-        <div class="item">Choice 2</div>
-        <div class="item">Choice 3</div>
+        <div class="item" *ngFor="let category of categories" 
+                          routerLink="/kategoria/{{category.id}}">
+                          {{category.name}}
+                        </div>
       </div>
     </div>
     <a class="item" routerLinkActive="active" routerLink="/promocje">

@@ -16,5 +16,5 @@ export class Book {
     lastUpdateDate: Date;
     hardcover?: boolean;
     pages?: number;
-    categories: Category[];
+    categories?: Category[];
 }
