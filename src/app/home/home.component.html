@@ -9,10 +9,31 @@
         <h3 class="ui dividing header" *ngIf="!searchMode && !categoryName">
             Ostatnio dodane książki
         </h3>
+        <!-- <div style="float: right;"> -->
+            <label style="margin-right: 1em;">Liczba wyników:</label>
+            <select (change)="updatePageSize($event.target.value)">
+                <option>12</option>
+                <option selected="true">24</option>
+                <option>48</option>
+                <option>72</option>
+            </select>
+        <!-- </div> -->
     </div>
     <div class="ui stackable six cards">
         <ng-container>
             <app-card class="ui fluid card" *ngFor="let book of books" [book]="book"></app-card>           
         </ng-container>
+    </div>
+    <div style="margin-top: 1em;" *ngIf="totalPages>1">
+        <ngb-pagination class="d-flex justify-content-center"
+                        [(page)]="pageNumber"
+                        [pageSize]="pageSize"
+                        [collectionSize]="totalElements"
+                        (pageChange)="listBooks()"
+                        [rotate]="true" 
+                        [ellipses]="false" 
+                        [boundaryLinks]="true"
+                        >
+        </ngb-pagination>
     </div>
 </div>

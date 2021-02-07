@@ -5,5 +5,11 @@ export class CategoryWrapper {
     name: string;
     books: {
       content: Book[];
+      totalElements: number;
+      totalPages: number;
+      pageable: {
+        pageNumber: number;
+        pageSize: number;
+      }
     }    
 }

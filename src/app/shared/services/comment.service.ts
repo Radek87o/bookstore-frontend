@@ -5,8 +5,14 @@ import { map, tap } from 'rxjs/operators';
 import { Comment } from '../model/comment';
 import { CommentDto } from '../model/dto/comment-dto'
 
-interface CommentListResponse {
+export interface CommentListResponse {
   content: Comment[];
+  totalElements: number;
+  totalPages: number;
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+  }
 }
 
 @Injectable({
@@ -19,14 +25,11 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  getCommentsByBook(bookId: string, pageNumber: number, pageSize: number): Observable<Comment[]> {
+  getCommentsByBook(bookId: string, pageNumber: number): Observable<CommentListResponse> {
     let queryParams = new HttpParams()
-      .set("pageNumber", pageNumber.toString())
-      .set("pageSize", pageSize.toString());
+      .set("pageNumber", pageNumber.toString());
     
-    return this.http.get<CommentListResponse>(`${this.baseUrl}/${bookId}`, {params: queryParams}).pipe(
-      map(response => response.content)
-    )
+    return this.http.get<CommentListResponse>(`${this.baseUrl}/${bookId}`, {params: queryParams});
   }
 
   saveComment(commentDto: CommentDto, bookId: string, userId: string) : Observable<any> {

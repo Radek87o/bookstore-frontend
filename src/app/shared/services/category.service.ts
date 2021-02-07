@@ -23,6 +23,6 @@ export class CategoryService {
     let params = new HttpParams()
                   .set('page', pageParam)
                   .set('size', sizeParam);
-    return this.http.get<CategoryWrapper>(`${this.baseUrl}/${categoryId}`)
+    return this.http.get<CategoryWrapper>(`${this.baseUrl}/${categoryId}`, {params: params})
   }
 }

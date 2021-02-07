@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { Observable } from 'rxjs';
 import { Book } from '../model/book'
 import { BookDto } from '../model/dto/book-dto';
 
-interface BooksListResponse {
+export interface BooksListResponse {
   content: Book[];
+  totalElements: number;
+  totalPages: number;
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+  }
 }
 
 @Injectable({
@@ -18,8 +23,13 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  getBooksList(): Observable<Book[]>{
-    return this.listBooks(this.baseUrl, new HttpParams());
+  getBooksList(page: number, size: number): Observable<BooksListResponse>{
+    let pageParam = page===null ? null : page.toString();
+    let sizeParam = size===null ? null : size.toString();
+    let params = new HttpParams()
+                  .set('page', pageParam)
+                  .set('size', sizeParam);
+    return this.listBooks(this.baseUrl, params);
   }
 
   getBook(id: string) : Observable<Book> {
@@ -30,7 +40,7 @@ export class BookService {
     return this.http.post(this.baseUrl, book);
   }
 
-  getBookListByKeyword(keyword: string, page: number, size: number) : Observable<Book[]> {
+  getBookListByKeyword(keyword: string, page: number, size: number) : Observable<BooksListResponse> {
     let pageParam = page===null ? null : page.toString();
     let sizeParam = size===null ? null : size.toString();
     let params = new HttpParams()
@@ -41,9 +51,7 @@ export class BookService {
     return this.listBooks(searchUrl, params)
   }
 
-  listBooks(url: string, dataParams: HttpParams) : Observable<Book[]> {
-    return this.http.get<BooksListResponse>(url, {params: dataParams}).pipe(
-      map(response => response.content)
-    );
+  listBooks(url: string, dataParams: HttpParams) : Observable<BooksListResponse> {
+    return this.http.get<BooksListResponse>(url, {params: dataParams});
   }
 }

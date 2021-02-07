@@ -31,7 +31,7 @@ export class SearchInputComponent implements OnInit {
     document.getElementById('searchResults').style.display='block';
     this.bookService.getBookListByKeyword(searchInput.target.value, 0, 5).subscribe(
       data => {
-        this.books=data;
+        this.books=data.content;
       }
     )
   }
