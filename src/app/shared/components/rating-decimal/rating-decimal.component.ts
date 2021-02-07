@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { RatingService } from '../../services/rating.service'
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Rating } from '../../model/rating';
+import { RatingService } from '../../services/rating.service';
 
 @Component({
   selector: 'app-rating-decimal',
@@ -15,16 +17,16 @@ export class RatingDecimalComponent implements OnInit {
 
   constructor(private ratingService: RatingService, private route: ActivatedRoute) { }
 
-
-  //todo - przerobić na rxjs
-  //todo - zmienić sposób przekazywania parametrów
-
   ngOnInit(): void {
-    const currentId = this.route.snapshot.paramMap.get('id');
-    this.ratingService.getBookRatings(currentId).subscribe(
+    const bookRatingsObservable: Observable<Rating[]> = this.route.paramMap.pipe(
+      switchMap((params, ParamMap) =>{
+        return this.ratingService.getBookRatings(params.get('id'))
+      })
+    )
+
+    bookRatingsObservable.subscribe(
       data => {
         if(data.length>0) {
-          console.log(data);
           let totalRates = 0;
           let avgRate = 0
           data.forEach(rating => totalRates+=rating.vote);
@@ -33,7 +35,7 @@ export class RatingDecimalComponent implements OnInit {
           this.currentRate=avgRate;
         }
       }
-    );    
+    )
   }
 
 }

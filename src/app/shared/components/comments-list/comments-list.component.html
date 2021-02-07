@@ -1,5 +1,5 @@
 <div class="ui comments">
-    <h3 class="ui dividing header">Komentarze</h3>
+    <h3 class="ui dividing header">Komentarze ({{totalElements}})</h3>
     <div *ngIf="bookComments?.length===0">
       <div class="content">
         <div class="text">
@@ -26,12 +26,24 @@
         </div>
       </div>
     </ng-container>
+    <div style="margin-top: 1em;" *ngIf="totalPages>1">
+      <ngb-pagination
+      class="d-flex justify-content-center"
+      [(page)]="pageNumber"
+      [pageSize]="pageSize"
+      [collectionSize]="totalElements"
+      (pageChange)="getBookCommentsPage()"
+      [rotate]="true" 
+      [ellipses]="false" 
+      [boundaryLinks]="true"
+      ></ngb-pagination>
+    </div>
     <form class="ui reply form error" [formGroup]="commentsForm" (ngSubmit)="onSubmit()">
       <div class="field">
           <app-text-area [control]="commentsForm.get('content')"></app-text-area>
       </div>
       <div *ngIf="commentSaved" class="ui green message">Komentarz został zapisany</div>
-      <div *ngIf="commentSavedError" class="ui red message">Komentarz został zapisany</div>
+      <div *ngIf="commentSavedError" class="ui red message">Komentarz nie został zapisany</div>
       <button [disabled]="commentsForm.invalid" type="submit" class="ui blue labeled submit icon button">   
               <i class="icon edit"></i> Dodaj komentarz
       </button>
