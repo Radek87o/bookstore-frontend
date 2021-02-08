@@ -9,15 +9,13 @@
         <h3 class="ui dividing header" *ngIf="!searchMode && !categoryName">
             Ostatnio dodane książki
         </h3>
-        <!-- <div style="float: right;"> -->
-            <label style="margin-right: 1em;">Liczba wyników:</label>
-            <select (change)="updatePageSize($event.target.value)">
-                <option>12</option>
-                <option selected="true">24</option>
-                <option>48</option>
-                <option>72</option>
-            </select>
-        <!-- </div> -->
+        <label style="margin-right: 1em;">Liczba wyników:</label>
+        <select (change)="updatePageSize($event.target.value)">
+            <option [selected]="this.pageSize===12">12</option>
+            <option [selected]="this.pageSize===24">24</option>
+            <option [selected]="this.pageSize===48">48</option>
+            <option [selected]="this.pageSize===72">72</option>
+        </select>
     </div>
     <div class="ui stackable six cards">
         <ng-container>
@@ -29,7 +27,7 @@
                         [(page)]="pageNumber"
                         [pageSize]="pageSize"
                         [collectionSize]="totalElements"
-                        (pageChange)="listBooks()"
+                        (pageChange)="changePage()"
                         [rotate]="true" 
                         [ellipses]="false" 
                         [boundaryLinks]="true"

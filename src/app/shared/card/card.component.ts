@@ -15,4 +15,9 @@ export class CardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  calculatePromoPrice(): number {
+    const inputDiscount = ((this.book.basePrice-this.book.promoPrice)/this.book.promoPrice)*100;
+    return Math.round(inputDiscount);
+  }
+
 }

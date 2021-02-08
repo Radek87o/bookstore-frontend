@@ -64,4 +64,9 @@ export class BookDetailsComponent implements OnInit {
   back() {
     this.location.back();
   }
+
+  calculatePromoPrice(): number {
+    const inputDiscount = ((this.book.basePrice-this.book.promoPrice)/this.book.promoPrice)*100;
+    return Math.round(inputDiscount);
+  }
 }

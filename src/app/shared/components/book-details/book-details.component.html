@@ -64,7 +64,13 @@
         </div>
         <div class="header">
           <i class="tag icon"></i>
-          {{book.basePrice | priceDisplay}} zł
+          <ng-container *ngIf="!book.promoPrice">
+            {{book.basePrice | priceDisplay}} zł
+          </ng-container>
+          <ng-container *ngIf="book.promoPrice">
+            {{book.promoPrice | priceDisplay}} zł
+            <div class="ui green tag label">-{{calculatePromoPrice()}}%</div>
+          </ng-container>
         </div>
         <div class="extra">
             <button class="ui red button" [disabled]="availabilityState===2">

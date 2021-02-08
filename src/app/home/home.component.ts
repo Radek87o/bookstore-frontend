@@ -6,6 +6,7 @@ import { Book } from '../shared/model/book';
 import { CategoryWrapper } from '../shared/model/category-wrapper';
 import { BookService, BooksListResponse } from '../shared/services/book.service'
 import { CategoryService } from '../shared/services/category.service';
+import { NavigationService } from '../shared/services/navigation.service';
 
 @Component({
   selector: 'app-home',
@@ -26,10 +27,18 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private bookService: BookService, 
-              private categoryService: CategoryService, 
+              private categoryService: CategoryService,
+              private navigationService: NavigationService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.pageNumber = this.navigationService.pageNumber ? this.navigationService.pageNumber : 1;
+    this.pageSize = this.navigationService.pageSize ? this.navigationService.pageSize : 24;
+    this.listBooks();
+  }
+
+  changePage() {
+    this.navigationService.updatePagination(this.pageNumber, this.pageSize);
     this.listBooks();
   }
 
