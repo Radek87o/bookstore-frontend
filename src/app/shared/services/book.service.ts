@@ -51,6 +51,16 @@ export class BookService {
     return this.listBooks(searchUrl, params)
   }
 
+  getBooksWithPromo(page: number, size: number) : Observable<BooksListResponse> {
+    let pageParam = page===null ? null : page.toString();
+    let sizeParam = size===null ? null : size.toString();
+    let params = new HttpParams()
+                  .set('page', pageParam)
+                  .set('size', sizeParam);      
+    const promosUrl = `${this.baseUrl}/promos`;
+    return this.listBooks(promosUrl, params);
+  }
+
   listBooks(url: string, dataParams: HttpParams) : Observable<BooksListResponse> {
     return this.http.get<BooksListResponse>(url, {params: dataParams});
   }

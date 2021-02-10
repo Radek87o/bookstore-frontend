@@ -93,6 +93,7 @@ export class HomeComponent implements OnInit {
   updatePageSize(pageSize: number) {
     this.pageSize=pageSize;
     this.pageNumber=1;
+    this.navigationService.updatePagination(this.pageNumber, this.pageSize);
     this.listBooks();
   }
 

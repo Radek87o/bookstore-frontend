@@ -1,1 +1,31 @@
-<p>promos-list works!</p>
+<div class="ui segment">
+    <div style="margin-bottom: 1.5rem;">
+        <h3 class="ui dividing header">
+            Książki objęte promocją
+        </h3>
+        <label style="margin-right: 1em;">Liczba wyników:</label>
+        <select (change)="updatePageSize($event.target.value)">
+            <option [selected]="this.pageSize===12">12</option>
+            <option [selected]="this.pageSize===24">24</option>
+            <option [selected]="this.pageSize===48">48</option>
+            <option [selected]="this.pageSize===72">72</option>
+        </select>
+    </div>
+    <div class="ui stackable six cards">
+        <ng-container>
+            <app-card class="ui fluid card" *ngFor="let book of books" [book]="book"></app-card>           
+        </ng-container>
+    </div>
+    <div style="margin-top: 1em;" *ngIf="totalPages>1">
+        <ngb-pagination class="d-flex justify-content-center"
+                        [(page)]="pageNumber"
+                        [pageSize]="pageSize"
+                        [collectionSize]="totalElements"
+                        (pageChange)="changePage()"
+                        [rotate]="true" 
+                        [ellipses]="false" 
+                        [boundaryLinks]="true"
+                        >
+        </ngb-pagination>
+    </div>
+</div>

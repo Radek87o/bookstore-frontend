@@ -5,8 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class NavigationService {
 
-  currentPageNumber=1;
-  currentPageSize=24;
+  private currentPageNumber=1;
+  private currentPageSize=24;
+
+  private currentPromoPageNumber=1;
+  private currentPromoPageSize=24;
 
   constructor() { }
 
@@ -15,11 +18,24 @@ export class NavigationService {
     this.currentPageSize=theCurrentPageSize;
   }
 
+  updatePromoPagination(theCurrentPageNumber: number, theCurrentPageSize: number) {
+    this.currentPromoPageNumber=theCurrentPageNumber;
+    this.currentPromoPageSize=theCurrentPageSize;
+  }
+
   get pageNumber() {
     return this.currentPageNumber;
   }
 
   get pageSize() {
     return this.currentPageSize;
+  }
+
+  get promoPageNumber() {
+    return this.currentPromoPageNumber;
+  }
+
+  get promoPageSize() {
+    return this.currentPromoPageSize;
   }
 }
