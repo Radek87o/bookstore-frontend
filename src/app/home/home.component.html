@@ -6,7 +6,10 @@
         <h3 class="ui dividing header" *ngIf="categoryMode">
             Ksiażki z kategorii: {{categoryName}}
         </h3>
-        <h3 class="ui dividing header" *ngIf="!searchMode && !categoryName">
+        <h3 class="ui dividing header" *ngIf="authorMode">
+            Ksiażki autora: {{authorFirstName}} {{authorLastName}}
+        </h3>
+        <h3 class="ui dividing header" *ngIf="!searchMode && !categoryName && !authorMode">
             Ostatnio dodane książki
         </h3>
         <label style="margin-right: 1em;">Liczba wyników:</label>
