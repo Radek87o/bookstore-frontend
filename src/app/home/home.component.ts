@@ -6,7 +6,9 @@ import { Book } from '../shared/model/book';
 import { CategoryWrapper } from '../shared/model/category-wrapper';
 import { BookService, BooksListResponse } from '../shared/services/book.service'
 import { CategoryService } from '../shared/services/category.service';
+import { AuthorService } from '../shared/services/author.service';
 import { NavigationService } from '../shared/services/navigation.service';
+import { AuthorWrapper } from '../shared/model/author-wrapper';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +20,10 @@ export class HomeComponent implements OnInit {
   books: Book[] = [];
   searchMode: boolean = false;
   categoryMode: boolean = false;
+  authorMode: boolean = false;
   categoryName: string = '';
+  authorFirstName: string = '';
+  authorLastName: string = '';
   keyword: string = '';
   totalElements: number = 0;
   totalPages: number = 0;
@@ -28,6 +33,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private bookService: BookService, 
               private categoryService: CategoryService,
+              private authorService: AuthorService,
               private navigationService: NavigationService,
               private route: ActivatedRoute) { }
 
@@ -45,11 +51,14 @@ export class HomeComponent implements OnInit {
   listBooks(){
     this.searchMode=this.route.snapshot.paramMap.has('keyword');
     this.categoryMode=this.route.snapshot.paramMap.has('categoryId');
+    this.authorMode=this.route.snapshot.paramMap.has('authorId');
     
     if(this.searchMode) {
       this.handleSearchBooks();
     } else if(this.categoryMode){
       this.handleCategoryBooks();
+    } else if(this.authorMode){
+      this.handleAuthorBooks();
     } else {
       this.handleListBooks();
     }
@@ -60,7 +69,6 @@ export class HomeComponent implements OnInit {
   }
 
   handleSearchBooks() {
-    console.log("inside search books method");
     const bookObservable: Observable<BooksListResponse> = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.keyword = params.get('keyword');
@@ -73,7 +81,6 @@ export class HomeComponent implements OnInit {
   }
 
   handleCategoryBooks() {
-    console.log("inside category books method");
     const categoryWrapper: Observable<CategoryWrapper> = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         return this.categoryService.getCategoryBooks(params.get('categoryId'), this.pageNumber-1, this.pageSize);
@@ -88,6 +95,25 @@ export class HomeComponent implements OnInit {
       this.totalPages=data.books.totalPages;
       this.totalElements=data.books.totalElements;
     })
+  }
+
+  handleAuthorBooks() {
+    const authorWrapper: Observable<AuthorWrapper> = this.route.paramMap.pipe(
+      switchMap((params: ParamMap)=>{
+        return this.authorService.getAuthorBooks(params.get(`authorId`), this.pageNumber-1, this.pageSize)
+      })
+    );
+
+      authorWrapper.subscribe(data=>{
+        this.books=data.books.content;
+        this.authorFirstName=data.firstName;
+        this.authorLastName=data.lastName;
+        this.pageNumber=data.books.pageable.pageNumber+1;
+        this.pageSize=data.books.pageable.pageSize;
+        this.totalPages=data.books.totalPages;
+        this.totalElements=data.books.totalElements;
+      })
+    
   }
 
   updatePageSize(pageSize: number) {

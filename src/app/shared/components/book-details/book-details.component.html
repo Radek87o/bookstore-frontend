@@ -9,7 +9,7 @@
         <div class="meta">
           <p>{{book.subtitle}}</p>
         </div>
-        <a class="header">
+        <a class="header" routerLink="/autor/{{book.author.id}}">
           {{book.author?.firstName}} {{book.author?.lastName}}
         </a>
         <div class="meta" *ngIf="!activeRating">
@@ -58,7 +58,7 @@
           </p>
           <ul>
             <li class="categoriesItem" *ngFor="let category of book.categories">
-              <a>{{category.name}}</a>
+              <a routerLink="/kategoria/{{category.id}}">{{category.name}}</a>
             </li>
           </ul> 
         </div>
