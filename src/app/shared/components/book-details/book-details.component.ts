@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
+import { CartService } from '../../services/cart.service';
 import { Book } from '../../model/book';
 import { AvailabilityState } from '../../model/availability-state.enum';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { CartItem } from '../../model/cart-item';
 
 @Component({
   selector: 'app-book-details',
@@ -19,7 +21,10 @@ export class BookDetailsComponent implements OnInit {
   showComments: boolean = false;
   activeRating: boolean = false;
   
-  constructor(private bookService: BookService, private route: ActivatedRoute, private location: Location) { }
+  constructor(private bookService: BookService, 
+              private cartService: CartService,
+              private route: ActivatedRoute, 
+              private location: Location) { }
 
   ngOnInit(): void {
 
@@ -68,5 +73,10 @@ export class BookDetailsComponent implements OnInit {
   calculatePromoPrice(): number {
     const inputDiscount = ((this.book.basePrice-this.book.promoPrice)/this.book.promoPrice)*100;
     return Math.round(inputDiscount);
+  }
+
+  addToCart(book: Book){
+    let cartItem = new CartItem(book);
+    this.cartService.addToCart(cartItem);
   }
 }

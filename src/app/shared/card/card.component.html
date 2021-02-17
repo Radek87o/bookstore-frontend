@@ -17,7 +17,7 @@
         {{book.promoPrice | priceDisplay}} zł
     </div>
     <div class="extra content center aligned">
-        <button class="ui small red button">
+        <button class="ui small red button" (click)="addToCart(book)">
             <i class="shopping cart icon"></i>
             <span>Do koszyka</span>
         </button>

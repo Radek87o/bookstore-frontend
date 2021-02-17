@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Book } from '../model/book'; 
+import { CartItem } from '../model/cart-item';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-card',
@@ -10,7 +12,7 @@ export class CardComponent implements OnInit {
 
   @Input() book: Book;
 
-  constructor() { }
+  constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
   }
@@ -20,4 +22,8 @@ export class CardComponent implements OnInit {
     return Math.round(inputDiscount);
   }
 
+  addToCart(book: Book){
+    let cartItem = new CartItem(book);
+    this.cartService.addToCart(cartItem);
+  }
 }

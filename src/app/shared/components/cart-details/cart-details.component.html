@@ -1,0 +1,53 @@
+<div class="ui segment">
+    <h3 class="ui dividing header" *ngIf="cartItems.length>0">
+        Lista zamówionych książek:
+    </h3>
+    <table class="ui padded table" *ngIf="cartItems.length>0">
+        <tbody>
+            <tr *ngFor="let cartItem of cartItems">
+                <td class="two wide">
+                    <img [src]="cartItem.imageUrl" class="ui rounded image" style="width: 70px; margin: 2px; margin-left: 10px;"/>
+                </td>
+                <td class="eight wide">
+                    <div class="content">
+                        <div class="ui header">
+                            {{cartItem.title}}
+                        </div>
+                        <div class="ui meta">
+                            Cena 1 egzemplarza: {{cartItem.unitPrice | priceDisplay}} zł
+                        </div>
+                    </div>
+                </td>
+                <td class="six wide">    
+                    <p>
+                        Liczba sztuk:
+                    </p>
+                    <div>
+                        <button class="mini ui blue button" (click)="decrementCartItem(cartItem)">-</button>
+                        <span style="margin-left: 20px; margin-right: 20px;"><b>{{cartItem.quantity}}</b></span>
+                        <button class="mini ui blue button" (click)="incrementCartItem(cartItem)">+</button>
+                    </div>
+                    <p style="margin-top: 10px;">
+                        Cena całkowita: <b>{{cartItem.quantity * cartItem.unitPrice | priceDisplay}} zł</b> 
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2"></th>
+                <th>
+                    <div class="ui right floated">
+                        <h3>Liczba zamówionych produktów: <b>{{totalQuantity}}</b></h3>
+                        <h3>Cena łączna zamówienia: <b>{{totalPrice | priceDisplay}} zł</b></h3>
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+    <div *ngIf="cartItems.length===0" class="ui segment">
+        <h1 style="text-align: center;">Twój koszyk jest wciąż pusty</h1>
+        <img class="ui centered large image" src="/assets/images/empty-empty-cart-icon-png.png">
+    </div>
+</div>
+
