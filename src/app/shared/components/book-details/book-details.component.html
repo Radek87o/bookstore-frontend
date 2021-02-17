@@ -73,7 +73,7 @@
           </ng-container>
         </div>
         <div class="extra">
-            <button class="ui red button" [disabled]="availabilityState===2">
+            <button class="ui red button" [disabled]="availabilityState===2" (click)="addToCart(book)">
               <i class="shopping cart icon"></i>
               <span>Do koszyka</span>
             </button>

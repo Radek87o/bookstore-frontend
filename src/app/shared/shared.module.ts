@@ -14,19 +14,18 @@ import { CommentsFormComponent } from './components/comments-form/comments-form.
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { RatingFormComponent } from './components/rating-form/rating-form.component';
 import { InputComponent } from './components/input/input.component';
-
-
-
+import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 @NgModule({
-  declarations: [CardComponent, TitleTrimmerPipe, PriceDisplayPipe, BookDetailsComponent, RatingDecimalComponent, CommentsListComponent, CommentsFormComponent, TextAreaComponent, RatingFormComponent, InputComponent],
+  declarations: [CardComponent, TitleTrimmerPipe, PriceDisplayPipe, BookDetailsComponent, RatingDecimalComponent, CommentsListComponent, CommentsFormComponent, TextAreaComponent, RatingFormComponent, InputComponent, CartStatusComponent, CartDetailsComponent],
   imports: [
     CommonModule,
     RouterModule,
     NgbModule,
     ReactiveFormsModule
   ],
-  exports: [CardComponent, RatingDecimalComponent, InputComponent, TextAreaComponent, TitleTrimmerPipe, PriceDisplayPipe],
+  exports: [CardComponent, RatingDecimalComponent, InputComponent, TextAreaComponent, TitleTrimmerPipe, PriceDisplayPipe, CartStatusComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

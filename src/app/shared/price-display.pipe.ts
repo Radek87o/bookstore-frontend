@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PriceDisplayPipe implements PipeTransform {
 
   transform(value: number, ...args: unknown[]): unknown {
-    let stringNumber = value ? value.toString().replace('.',',') : '';
+    let stringNumber = value ? value.toFixed(2).replace('.',',') : '';
     if(stringNumber.length===2) {
       return stringNumber+',00';
     } else if(stringNumber.length===4){

@@ -1,0 +1,6 @@
+<div class="ui compact fluid menu">
+    <button class="ui fluid basic button item" routerLink="/koszyk">
+        <i class="shopping cart icon"></i>
+        <div class="floating ui red label" *ngIf="totalQuantity>0">{{totalQuantity}}</div>
+    </button>
+</div>
