@@ -1,7 +1,7 @@
 <div class="field" [ngClass]="{'error': showErrors()}">
     <textarea class="input" [formControl]="control"></textarea>
     <ng-container *ngIf="showErrors()">
-        <div class="ui small error message" *ngIf="control.errors.required">
+        <div class="ui small error message" *ngIf="control.errors.required || control.errors.notOnlyWhitespace">
             Pole musi mieć treść.
         </div>
         <div class="ui small error message" *ngIf="control.errors.minlength">

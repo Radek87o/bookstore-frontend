@@ -2,7 +2,7 @@
     <label class="label">{{label}}</label>
     <input [formControl]="control" placeholder="{{placeholder}}"/>
     <ng-container *ngIf="control.invalid  && control.touched && control.dirty">
-        <div class="ui small error message" *ngIf="control.errors.required">
+        <div class="ui small error message" *ngIf="control.errors.required || control.errors.notOnlyWhitespace">
             To pole nie może być puste
         </div>
         <div class="ui small error message" *ngIf="control.errors.minlength">

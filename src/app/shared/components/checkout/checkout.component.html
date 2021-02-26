@@ -1,0 +1,80 @@
+<div class="ui segment">
+    <h3 class="ui dividing header">
+        FORMULARZ ZAMÓWIENIA
+    </h3>
+    <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()" class="narrow">
+        <div class="ui form error success">
+            <h4 class="ui dividing header">Dane osobowe:</h4>
+            <div formGroupName="customer">
+                <div class="field">
+                    <app-input [control]="checkoutFormGroup.get('customer').get('firstName')" label="Imię"></app-input>
+                </div>
+                <div class="field">
+                    <app-input [control]="checkoutFormGroup.get('customer').get('lastName')" label="Nazwisko"></app-input>
+                </div>
+                <div class="field">
+                    <app-input [control]="checkoutFormGroup.get('customer').get('email')" label="Email"></app-input>    
+                </div>
+            </div>
+            <h4 class="ui dividing header">Adres do wysyłki:</h4>
+            <div formGroupName="shippingAddress">
+                <div class="fields">
+                    <div class="ten wide field">
+                        <app-input [control]="checkoutFormGroup.get('shippingAddress').get('city')" label="Miasto"></app-input>
+                    </div>
+                    <div class="six wide field">
+                        <app-input [control]="checkoutFormGroup.get('shippingAddress').get('zipCode')" label="Kod Pocztowy (dd-ddd)"></app-input>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="ten wide field">
+                        <app-input [control]="checkoutFormGroup.get('shippingAddress').get('street')" label="Ulica"></app-input>
+                    </div>
+                    <div class="six wide field">
+                        <app-input [control]="checkoutFormGroup.get('shippingAddress').get('locationNumber')" label="Numer domu/mieszkania"></app-input>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
+                  <label>Adres do faktury ten sam co adres wysyłki</label>
+                </div>
+            </div>
+            <h4 class="ui dividing header">Adres do faktury:</h4>
+            <div formGroupName="billingAddress">
+                <div class="fields">
+                    <div class="ten wide field">
+                        <app-input [control]="checkoutFormGroup.get('billingAddress').get('city')" label="Miasto"></app-input>
+                    </div>
+                    <div class="six wide field">
+                        <app-input [control]="checkoutFormGroup.get('billingAddress').get('zipCode')" label="Kod Pocztowy (dd-ddd)"></app-input>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="ten wide field">
+                        <app-input [control]="checkoutFormGroup.get('billingAddress').get('street')" label="Ulica"></app-input>
+                    </div>
+                    <div class="six wide field">
+                        <app-input [control]="checkoutFormGroup.get('billingAddress').get('locationNumber')" label="Numer domu/mieszkania"></app-input>
+                    </div>
+                </div>
+            </div>
+            <div class="ui info message transition" style="text-align: center;">
+                <div class="header">
+                    Podsumowanie zamówienia
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                  <p>Liczba sztuk: <b>{{totalQuantity}}</b></p>
+                  <p>Cena zamówienia: <b>{{totalPrice | priceDisplay}} zł</b></p>
+                </div>
+              </div>
+        </div>
+        <div *ngIf="orderAdded" class="ui success message">Zamówienie zostało złożone</div>
+        <div *ngIf="orderAddedInvalid" class="ui error message">Wystąpił błąd przy próbie dokonania zamówienia</div>
+        <div style="text-align: center;">
+            <button class="positive ui submit formButton button" [disabled]="checkoutFormGroup.invalid || isCartEmpty()" type="submit">Dokonaj płatności</button>
+            <button class="ui formButton button" type="button" (click)="onResetForm()">Wyczyść formularz</button>
+        </div> 
+    </form>
+</div>

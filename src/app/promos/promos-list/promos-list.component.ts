@@ -19,8 +19,8 @@ export class PromosListComponent implements OnInit {
   constructor(private bookService: BookService, private navigationService: NavigationService) { }
 
   ngOnInit(): void {
-    this.pageNumber = this.navigationService.promoPageNumber? this.navigationService.pageNumber : 1;
-    this.pageSize = this.navigationService.promoPageSize ? this.navigationService.pageSize : 24;
+    this.pageNumber = this.navigationService.promoPageNumber? this.navigationService.promoPageNumber : 1;
+    this.pageSize = this.navigationService.promoPageSize ? this.navigationService.promoPageSize : 24;
     this.findBooksWithPromo();
   }
 
@@ -51,5 +51,4 @@ export class PromosListComponent implements OnInit {
       this.totalPages=data.totalPages;      
     }
   }
-
 }
