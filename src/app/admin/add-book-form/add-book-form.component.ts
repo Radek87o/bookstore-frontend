@@ -5,6 +5,7 @@ import { Category } from 'src/app/shared/model/category';
 import { CategoryService } from '../../shared/services/category.service';
 import { AuthorDto } from 'src/app/shared/model/dto/author-dto';
 import { BookService } from 'src/app/shared/services/book.service';
+import { BookStoreValidators } from '../../shared/utils/book-store-validators';
 
 @Component({
   selector: 'app-add-book-form',
@@ -19,11 +20,29 @@ export class AddBookFormComponent implements OnInit {
   private urlReg ='(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
   bookForm = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    subtitle: new FormControl('', [Validators.minLength(2)]),
-    authorFirstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
-    authorLastName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(200), Validators.maxLength(2000)]),
+    title: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(2), 
+      BookStoreValidators.notOnlyWhitespace
+    ]),
+    subtitle: new FormControl('', [Validators.minLength(2), BookStoreValidators.notOnlyWhitespace]),
+    authorFirstName: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(2), 
+      Validators.maxLength(30), 
+      BookStoreValidators.notOnlyWhitespace]),
+    authorLastName: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(2), 
+      Validators.maxLength(30), 
+      BookStoreValidators.notOnlyWhitespace
+    ]),
+    description: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(200), 
+      Validators.maxLength(2000),
+      BookStoreValidators.notOnlyWhitespace
+    ]),
     imageUrl: new FormControl('', [Validators.pattern(this.urlReg)]),
     issueYear: new FormControl('', [Validators.required, Validators.min(2000), Validators.max(2022)]),
     pages: new FormControl('', [Validators.min(1), Validators.max(9999)]),
@@ -69,7 +88,6 @@ export class AddBookFormComponent implements OnInit {
     bookToSave.pages=this.bookForm.get('pages').value;
     bookToSave.unitsInStock=this.bookForm.get('unitsInStock').value;
     bookToSave.categories=this.bookForm.get('categories').value;
-    console.log(bookToSave);
     this.bookService.saveBook(bookToSave).subscribe(
       {
         next: response => {

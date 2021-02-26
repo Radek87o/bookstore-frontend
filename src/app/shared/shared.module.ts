@@ -16,9 +16,10 @@ import { RatingFormComponent } from './components/rating-form/rating-form.compon
 import { InputComponent } from './components/input/input.component';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
-  declarations: [CardComponent, TitleTrimmerPipe, PriceDisplayPipe, BookDetailsComponent, RatingDecimalComponent, CommentsListComponent, CommentsFormComponent, TextAreaComponent, RatingFormComponent, InputComponent, CartStatusComponent, CartDetailsComponent],
+  declarations: [CardComponent, TitleTrimmerPipe, PriceDisplayPipe, BookDetailsComponent, RatingDecimalComponent, CommentsListComponent, CommentsFormComponent, TextAreaComponent, RatingFormComponent, InputComponent, CartStatusComponent, CartDetailsComponent, CheckoutComponent],
   imports: [
     CommonModule,
     RouterModule,
