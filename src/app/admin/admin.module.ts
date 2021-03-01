@@ -5,10 +5,12 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AddBookFormComponent } from './add-book-form/add-book-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MainViewComponent } from './main-view/main-view.component';
+import { BooksListComponent } from './books-list/books-list.component';
 
 
 @NgModule({
-  declarations: [AddBookFormComponent],
+  declarations: [AddBookFormComponent, MainViewComponent, BooksListComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

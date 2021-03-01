@@ -28,12 +28,14 @@ export class SearchInputComponent implements OnInit {
       document.getElementById('searchResults').style.display='none';
       return;
     }
-    document.getElementById('searchResults').style.display='block';
-    this.bookService.getBookListByKeyword(searchInput.target.value, 0, 5).subscribe(
-      data => {
-        this.books=data.content;
-      }
-    )
+    if(document.getElementById('searchResults')) {
+      document.getElementById('searchResults').style.display='block';
+      this.bookService.getBookListByKeyword(searchInput.target.value, 0, 5).subscribe(
+        data => {
+          this.books=data.content;
+        }
+      )
+    }
   }
 
   clearResults() {

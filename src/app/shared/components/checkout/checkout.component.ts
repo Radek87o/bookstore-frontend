@@ -110,7 +110,6 @@ export class CheckoutComponent implements OnInit {
 
   onResetForm() {
     this.checkoutFormGroup.reset();    
-
     this.orderAddedInvalid = false;
   }
 

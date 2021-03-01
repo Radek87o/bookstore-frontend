@@ -9,7 +9,7 @@
         <div class="meta">
           <p>{{book.subtitle}}</p>
         </div>
-        <a class="header" routerLink="/autor/{{book.author.id}}">
+        <a class="header" routerLink="/autor/{{book.author?.id}}">
           {{book.author?.firstName}} {{book.author?.lastName}}
         </a>
         <div class="meta" *ngIf="!activeRating">
