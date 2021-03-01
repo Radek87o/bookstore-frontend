@@ -72,7 +72,9 @@ export class HomeComponent implements OnInit {
     const bookObservable: Observable<BooksListResponse> = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.keyword = params.get('keyword');
-        document.getElementById('searchResults').style.display='none';
+        if(document.getElementById('searchResults')) {
+          document.getElementById('searchResults').style.display='none';
+        }
         return this.bookService.getBookListByKeyword(params.get('keyword'),this.pageNumber-1, this.pageSize);
       })
     )

@@ -1,4 +1,7 @@
 <div class="ui segment">
+    <h3 class="ui dividing header">
+        Dodawanie i edycja książki
+    </h3>
     <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
         <div class="ui form error success">
             <div class="three fields">
@@ -83,5 +86,4 @@
             <button class="ui button" type="button" (click)="onResetForm()">Wyczyść formularz</button>
         </div>
     </form>
-    
 </div>
