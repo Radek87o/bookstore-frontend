@@ -5,6 +5,7 @@ import { BooksListComponent } from './books-list/books-list.component';
 import { MainViewComponent } from './main-view/main-view.component';
 
 const routes: Routes = [
+  { path: 'edytujKsiazke/:bookId', component: AddBookFormComponent },
   { path:'dodajKsiazke', component: AddBookFormComponent },
   { path:'listaKsiazek', component: BooksListComponent },
   { path:'', component: MainViewComponent }

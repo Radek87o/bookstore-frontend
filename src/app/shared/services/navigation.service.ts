@@ -11,6 +11,9 @@ export class NavigationService {
   private currentPromoPageNumber=1;
   private currentPromoPageSize=24;
 
+  private currentAdminPageNumber=1;
+  private currentAdminPageSize=20;
+
   constructor() { }
 
   updatePagination(theCurrentPageNumber: number, theCurrentPageSize: number) {
@@ -21,6 +24,11 @@ export class NavigationService {
   updatePromoPagination(theCurrentPageNumber: number, theCurrentPageSize: number) {
     this.currentPromoPageNumber=theCurrentPageNumber;
     this.currentPromoPageSize=theCurrentPageSize;
+  }
+
+  updateAdminPagination(theCurrentPageNumber: number, theCurrentPageSize: number) {
+    this.currentAdminPageNumber=theCurrentPageNumber;
+    this.currentAdminPageSize=theCurrentPageSize;
   }
 
   get pageNumber() {
@@ -37,5 +45,13 @@ export class NavigationService {
 
   get promoPageSize() {
     return this.currentPromoPageSize;
+  }
+
+  get adminPageNumber() {
+    return this.currentAdminPageNumber;
+  }
+
+  get adminPageSize() {
+    return this.currentAdminPageSize;
   }
 }

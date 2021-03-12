@@ -46,15 +46,29 @@
             <div class="three fields">
                 <div class="field">
                     <label>Kategorie (wybierz co najmniej jedną):</label>
-                    <select multiple="true" [formControl]="bookForm.get('categories')">
+                    <select multiple="true" [formControl]="bookForm.get('categories')" (change)="modifyBookCategories($event.target.value)">
                         <ng-container *ngFor="let category of categories">
-                            <option [value]="category">{{category.name}}</option>
+                            <option [value]="category.id"
+                                    [selected]="isCurrentBookCategory(category)">
+                                {{category.name}}
+                            </option>
                         </ng-container>
                     </select>
                     <div *ngIf="isFormInvalid(bookForm.get('categories'))" class="ui small error message">
                         To pole nie może być puste
                     </div>
                 </div>
+                <div class="field" *ngIf="bookCategories.length>0">
+                    <label>Obecne kategorie książki:</label>
+                    <ul>
+                        <li *ngFor="let bookCategory of bookCategories">
+                            {{bookCategory.name}}
+                            <i class="close link icon" (click)="removeBookCategory(bookCategory)"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="three fields">
                 <div class="field">
                     <label>Rodzaj okładki</label>
                     <select class="ui search dropdown" [formControl]="bookForm.get('isHardcover')">
@@ -66,12 +80,10 @@
                         To pole nie może być puste
                     </div>
                 </div>
-                
                 <div class="field">
                     <app-input [control]="bookForm.get('unitsInStock')" label="Liczba dostępnych egzemplarzy"></app-input>
                 </div>
             </div>
-            
             <div class="field">
                 <div class="ui checkbox">
                     <input type="checkbox" [formControl]="bookForm.get('active')">
@@ -82,8 +94,24 @@
         <div *ngIf="bookAdded" class="ui success message">Książka została zapisana</div>
         <div *ngIf="bookAddedInvalid" class="ui error message">Wystąpił błąd przy próbie dodania książki</div>
         <div style="text-align: center">
-            <button class="positive ui submit button" [disabled]="bookForm.invalid" type="submit">Dodaj książkę</button>
-            <button class="ui button" type="button" (click)="onResetForm()">Wyczyść formularz</button>
+            <button *ngIf="!editMode" 
+                    class="positive ui submit button" 
+                    [disabled]="bookForm.invalid" 
+                    type="submit">
+                    Dodaj książkę
+            </button>
+            <button *ngIf="editMode" 
+                    class="positive ui submit button" 
+                    [disabled]="bookForm.invalid" 
+                    type="submit">
+                    Edytuj książkę
+            </button>
+            <button *ngIf="!editMode" class="ui button" type="button" (click)="onResetForm()">
+                Wyczyść formularz
+            </button>
+            <button *ngIf="editMode" class="ui button" type="button" routerLink="/admin/listaKsiazek">
+                Wróć
+            </button>
         </div>
     </form>
 </div>
