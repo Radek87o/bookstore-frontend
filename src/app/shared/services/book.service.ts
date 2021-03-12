@@ -40,6 +40,14 @@ export class BookService {
     return this.http.post(this.baseUrl, book);
   }
 
+  updateBook(book: BookDto, bookId: string) {
+    return this.http.put(`${this.baseUrl}/${bookId}`, book);
+  }
+
+  deleteBook(bookId: string) {
+    return this.http.delete(`${this.baseUrl}/${bookId}`);
+  }
+
   getBookListByKeyword(keyword: string, page: number, size: number) : Observable<BooksListResponse> {
     let pageParam = page===null ? null : page.toString();
     let sizeParam = size===null ? null : size.toString();
@@ -61,7 +69,15 @@ export class BookService {
     return this.listBooks(promosUrl, params);
   }
 
-  listBooks(url: string, dataParams: HttpParams) : Observable<BooksListResponse> {
+  deactivateBook(bookId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/activation/${bookId}/deactivate`);
+  }
+
+  activateBook(bookId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/activation/${bookId}/activate`);
+  }
+
+  private listBooks(url: string, dataParams: HttpParams) : Observable<BooksListResponse> {
     return this.http.get<BooksListResponse>(url, {params: dataParams});
   }
 }

@@ -1,1 +1,99 @@
-<p>books-list works!</p>
+<div class="ui segment">
+    <h3 class="ui dividing header">
+        Lista książek:
+    </h3>
+    <div class="ui fluid action concentrated input" style="margin-bottom: 1em;">
+        <input #adminInput type="text" placeholder="Szukaj książki..." 
+                (keyup.enter)="findBooksByKeyword(adminInput.value)">
+        <div class="ui primary button" (click)="findBooksByKeyword(adminInput.value)">Szukaj</div>
+    </div>
+    <div>
+        <label style="margin-right: 1em;">Liczba wyników:</label>
+        <select (change)="updatePageSize($event.target.value)">
+            <option [selected]="this.pageSize===10">10</option>
+            <option [selected]="this.pageSize===20">20</option>
+            <option [selected]="this.pageSize===50">50</option>
+            <option [selected]="this.pageSize===100">100</option>
+        </select>
+        <label style="margin-left: 1em; margin-right: 0.1em;">Strona:</label>
+        <label><b>{{pageNumber}}</b></label>
+    </div>
+    <div *ngIf="keyword.length>0" style="margin-top: 0.5em;">
+        <label style="margin-right: 0.1em; text-decoration: underline;">Wyniki wyszukiwania dla:</label>
+        <label style="margin-left: 0.5em; text-decoration: underline;"><b>{{keyword}}</b></label>
+        <button class="ui button transparent" (click)="resetKeyword()">
+            <i class="ui icon window close"></i>
+        </button>
+    </div>
+    
+    <div *ngIf="books.length>0">
+        <table class="ui padded table">
+            <thead>
+                <tr>
+                    <th class="two wide"></th>
+                    <th class="eight wide">Tytuł</th>
+                    <th class="two wide">Aktywny</th>
+                    <th class="four wide">Edycja</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let book of books">
+                    <td>
+                        <img [src]="book.imageUrl" class="ui rounded custom-imageUrl image"/>
+                    </td>
+                    <td>
+                        <div class="content">
+                            <div class="ui header">
+                                <a routerLink="/ksiazka/{{book.id}}" class="custom-bookLink">{{book.title}}</a>
+                            </div>
+                            <div class="ui meta">
+                                Autor: {{book.author.firstName}} {{book.author.lastName}} 
+                            </div>
+                            <div class="ui meta">
+                                Cena: {{book.promoPrice ? book.promoPrice : book.basePrice | priceDisplay}} zł 
+                            </div>
+                        </div>
+                    </td>
+                    <td class="middle aligned">
+                        <button class="ui button" *ngIf="book.active" title="zablokuj" 
+                                (click)="deactivateBook(book)">
+                            <i class="ui icon lock"></i>
+                        </button>
+                        <button class="ui secondary button" *ngIf="!book.active" title="odblokuj" 
+                                (click)="activateBook(book)">
+                            <i class="ui icon unlock"></i>
+                        </button>
+                    </td>
+                    <td class="middle aligned">
+                        <button class="ui primary button" routerLink="/admin/edytujKsiazke/{{book.id}}">
+                            Edytuj
+                        </button>
+                        <button class="ui negative button" (click)="deleteBook(book)">
+                            Usuń
+                        </button>
+                    </td>
+                </tr>        
+            </tbody>
+        </table>
+        <div style="margin-top: 1em;" *ngIf="totalPages>1">
+            <ngb-pagination class="d-flex justify-content-center"
+                            [(page)]="pageNumber"
+                            [pageSize]="pageSize"
+                            [collectionSize]="totalElements"
+                            (pageChange)="changePage()"
+                            [rotate]="true" 
+                            [ellipses]="false" 
+                            [boundaryLinks]="true"
+                            >
+            </ngb-pagination>
+        </div>
+    </div>
+    <div *ngIf="isBookListEmpty()">
+        <div class="not-found-info">
+            <i class="massive frown outline icon"></i>
+            <h2>
+                Niestety, nie znaleźliśmy wyników dla Twojego wyszukiwania 
+            </h2>
+        </div>
+    </div>
+</div>

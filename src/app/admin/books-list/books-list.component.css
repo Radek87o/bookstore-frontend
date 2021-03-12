@@ -1,0 +1,27 @@
+.ui.button:not(.icon) > .icon:not(.button):not(.dropdown) {
+    margin: 0;
+}
+
+.transparent {
+    background-color: white !important;
+}
+
+i.massive.icon, i.massive.icons {
+    line-height: 1;
+    vertical-align: middle;
+    font-size: 16em;
+}
+
+.not-found-info {
+    text-align: center; 
+    margin-top: 1em;
+}
+
+.custom-imageUrl {
+    width: 70px; margin: 2px; 
+    margin-left: 10px;
+}
+
+.custom-bookLink {
+    color: black;
+}

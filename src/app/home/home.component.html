@@ -10,7 +10,7 @@
             Ksiażki autora: {{authorFirstName}} {{authorLastName}}
         </h3>
         <h3 class="ui dividing header" *ngIf="!searchMode && !categoryName && !authorMode">
-            Ostatnio dodane książki
+            Lista wszystkich książek
         </h3>
         <label style="margin-right: 1em;">Liczba wyników:</label>
         <select (change)="updatePageSize($event.target.value)">
