@@ -3,7 +3,7 @@ import { BookService } from '../../services/book.service';
 import { CartService } from '../../services/cart.service';
 import { Book } from '../../model/book';
 import { AvailabilityState } from '../../model/availability-state.enum';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -23,6 +23,7 @@ export class BookDetailsComponent implements OnInit {
   
   constructor(private bookService: BookService, 
               private cartService: CartService,
+              private router: Router,
               private route: ActivatedRoute, 
               private location: Location) { }
 
@@ -67,7 +68,11 @@ export class BookDetailsComponent implements OnInit {
   }
 
   back() {
-    this.location.back();
+    if(window.history.state.navigationId===1) {
+      this.router.navigateByUrl("/")
+    } else {
+      this.location.back();
+    }
   }
 
   calculatePromoPrice(): number {

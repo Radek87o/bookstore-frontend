@@ -18,13 +18,11 @@ export class BooksListComponent implements OnInit {
   pageSize: number = 20;
   totalElements: number = 0;
   totalPages: number = 0;
-  isBooksEmpty: boolean = false;
 
   ngOnInit(): void {
     this.pageNumber = this.navigationService.adminPageNumber ? this.navigationService.adminPageNumber : 1;
     this.pageSize = this.navigationService.adminPageSize ? this.navigationService.adminPageSize : 20
     this.retrieveBooks();
-    setTimeout(()=>this.isBookListEmpty(),2000);
   }
 
   retrieveBooks() {
@@ -91,12 +89,5 @@ export class BooksListComponent implements OnInit {
   changePage() {
     this.navigationService.updateAdminPagination(this.pageNumber, this.pageSize);
     this.retrieveBooks()
-  }
-
-  isBookListEmpty() {
-    if(this.books.length===0) {
-      this.isBooksEmpty=true;
-    }
-    this.isBooksEmpty=false;
   }
 }

@@ -23,3 +23,13 @@ html, body {
     }
 }
 
+i.massive.icon, i.massive.icons {
+    line-height: 1;
+    vertical-align: middle;
+    font-size: 16em;
+}
+
+.not-found-info {
+    text-align: center; 
+    margin-top: 1em;
+}

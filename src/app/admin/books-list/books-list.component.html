@@ -88,7 +88,7 @@
             </ngb-pagination>
         </div>
     </div>
-    <div *ngIf="isBookListEmpty()">
+    <div *ngIf="books.length==0 && keyword.length>0">
         <div class="not-found-info">
             <i class="massive frown outline icon"></i>
             <h2>
