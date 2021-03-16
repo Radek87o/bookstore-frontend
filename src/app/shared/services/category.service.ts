@@ -9,7 +9,7 @@ import { CategoryWrapper } from '../model/category-wrapper';
 })
 export class CategoryService {
 
-  private baseUrl: string = 'http://localhost:8080/api/category';
+  private baseUrl: string = 'http://localhost:8080/api/categories';
 
   constructor(private http: HttpClient) { }
 

@@ -24,12 +24,11 @@ export class BookService {
   constructor(private http: HttpClient) { }
 
   getBooksList(page: number, size: number): Observable<BooksListResponse>{
-    let pageParam = page===null ? null : page.toString();
-    let sizeParam = size===null ? null : size.toString();
-    let params = new HttpParams()
-                  .set('page', pageParam)
-                  .set('size', sizeParam);
-    return this.listBooks(this.baseUrl, params);
+    return this.getPaginatedResults(this.baseUrl, page, size);
+  }
+
+  getActiveBooksList(page: number, size: number): Observable<BooksListResponse>{
+    return this.getPaginatedResults(`${this.baseUrl}/active`, page, size);
   }
 
   getBook(id: string) : Observable<Book> {
@@ -59,14 +58,9 @@ export class BookService {
     return this.listBooks(searchUrl, params)
   }
 
-  getBooksWithPromo(page: number, size: number) : Observable<BooksListResponse> {
-    let pageParam = page===null ? null : page.toString();
-    let sizeParam = size===null ? null : size.toString();
-    let params = new HttpParams()
-                  .set('page', pageParam)
-                  .set('size', sizeParam);      
+  getBooksWithPromo(page: number, size: number) : Observable<BooksListResponse> {      
     const promosUrl = `${this.baseUrl}/promos`;
-    return this.listBooks(promosUrl, params);
+    return this.getPaginatedResults(promosUrl, page, size);
   }
 
   deactivateBook(bookId: string): Observable<any> {
@@ -75,6 +69,15 @@ export class BookService {
 
   activateBook(bookId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/activation/${bookId}/activate`);
+  }
+
+  private getPaginatedResults(url: string, page: number, size: number) : Observable<BooksListResponse> {
+    let pageParam = page===null ? null : page.toString();
+    let sizeParam = size===null ? null : size.toString();
+    let params = new HttpParams()
+                  .set('page', pageParam)
+                  .set('size', sizeParam);
+    return this.listBooks(url, params);
   }
 
   private listBooks(url: string, dataParams: HttpParams) : Observable<BooksListResponse> {

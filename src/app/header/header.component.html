@@ -1,7 +1,7 @@
 <div class="ui segment">
     <div class="ui middle aligned centered stackable grid" *ngIf="!isAdminView">
         <div class="computer only four wide column">
-            <a routerLinkActive="active" routerLink="/">
+            <a (click)="redirectToMainPage()">
                 <img class="ui small centered rounded image" src="/assets/images/companyYourLogo.png">
             </a>
         </div>
@@ -23,7 +23,7 @@
     </div>
     <div class="ui middle aligned centered stackable grid" *ngIf="isAdminView">
         <div class="computer only four wide column">
-            <a routerLinkActive="active" routerLink="/">
+            <a (click)="redirectToMainPage()">
                 <img class="ui small centered rounded image" src="/assets/images/companyYourLogo.png">
             </a>
         </div>

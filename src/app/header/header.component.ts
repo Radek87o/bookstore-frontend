@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavigationService } from '../shared/services/navigation.service';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +11,13 @@ export class HeaderComponent implements OnInit {
 
   isAdminView: boolean = true;
 
-  constructor() { }
+  constructor(private router: Router, private navigationService: NavigationService) { }
 
   ngOnInit(): void {
   }
 
+  redirectToMainPage() {
+    this.navigationService.resetPagination();
+    this.router.navigateByUrl('/');
+  }
 }

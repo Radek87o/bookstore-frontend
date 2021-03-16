@@ -31,6 +31,11 @@ export class NavigationService {
     this.currentAdminPageSize=theCurrentPageSize;
   }
 
+  resetPagination() {
+    this.currentPageNumber=1;
+    this.currentPageSize=24;
+  }
+
   get pageNumber() {
     return this.currentPageNumber;
   }
