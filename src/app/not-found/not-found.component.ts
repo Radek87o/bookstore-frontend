@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavigationService } from '../shared/services/navigation.service';
 
 @Component({
   selector: 'app-not-found',
@@ -8,9 +9,10 @@ import { Router } from '@angular/router';
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private navigationService: NavigationService) { }
 
   ngOnInit(): void {
+    this.navigationService.resetPagination();
     setTimeout(()=>this.router.navigateByUrl('/'), 5000);
   }
 

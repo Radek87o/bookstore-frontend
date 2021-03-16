@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
   }
 
   handleListBooks() {
-    this.bookService.getBooksList(this.pageNumber-1, this.pageSize).subscribe(this.processBooksResults());
+    this.bookService.getActiveBooksList(this.pageNumber-1, this.pageSize).subscribe(this.processBooksResults());
   }
 
   handleSearchBooks() {
