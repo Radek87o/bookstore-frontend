@@ -1,0 +1,99 @@
+<div class="ui segment">
+    <h3 class="ui dividing header">
+        Rejestracja użytkownika
+    </h3>
+    <form class="narrow" style="border-radius: 25%;" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="ui form error success register-form">
+            <div style="text-align: center;">
+                <i class="huge user circle icon"></i>
+            </div>
+            <h4 class="ui dividing header">Dane użytkownika</h4>
+            <div class="field register-field">
+                <app-input [control]="registerForm.get('firstName')" label="Imię" placeholder="Wpisz imię"></app-input>
+            </div>
+            <div class="field register-field">
+                <app-input [control]="registerForm.get('lastName')" label="Nazwisko" placeholder="Wpisz nazwisko"></app-input>
+            </div>
+            <div class="field register-field">
+                <app-input [control]="registerForm.get('username')" label="Nazwa użytkownika" placeholder="Wpisz nazwę użytkownika"></app-input>    
+            </div>
+            <div class="field register-field">
+                <app-input [control]="registerForm.get('email')" label="Email" placeholder="Wpisz adres email"></app-input>    
+            </div>
+            <div class="field register-field">
+                <label class="label">Hasło</label>
+                <input type="password" [formControl]="registerForm.get('password')" placeholder="Wpisz hasło"/>
+                <ng-container *ngIf="displayValidationError(registerForm.get('password'))">
+                    <div class="ui small error message" *ngIf="registerForm.get('password').errors.required">
+                        To pole nie może być puste
+                    </div>
+                    <div class="ui small error message" *ngIf="registerForm.get('password').errors.pattern">
+                        Hasło musi zawierać co najmniej 8 znaków, w tym min. 1 dużą literę, jedną cyfrę i 1 znak specjalny
+                    </div>    
+                </ng-container>    
+            </div>
+            <div class="field register-field">
+                <label class="label">Powtórz hasło</label>
+                <input type="password" [formControl]="registerForm.get('confirmPassword')" placeholder="Powtórz hasło"/>
+                <ng-container *ngIf="displayValidationError(registerForm.get('confirmPassword'))">
+                    <div class="ui small error message" *ngIf="registerForm.get('confirmPassword').errors.required">
+                        To pole nie może być puste
+                    </div>
+                    <div class="ui small error message" *ngIf="registerForm.get('confirmPassword').errors.pattern">
+                        Hasło musi zawierać co najmniej 8 znaków, w tym min. 1 dużą literę, jedną cyfrę i 1 znak specjalny
+                    </div>    
+                </ng-container>
+                <div class="ui small error message" 
+                        *ngIf="registerForm.errors?.passwordsNonMatching && passwordTouched(registerForm.get('password')) && passwordTouched(registerForm.get('confirmPassword'))">
+                    Podane hasła różnią się od siebie
+                </div>    
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" (change)="changeAddressDataVisibility($event)">
+                  <label><b>Dodaj dane adresowe (opcjonalnie)</b></label>
+                </div>
+            </div>
+            <div *ngIf="showAddressForm">
+                <h4 class="ui dividing header">Dane adresowe</h4>
+                <div class="field register-field">
+                    <app-input [control]="registerForm.get('city')" label="Miejscowość" placeholder="Wpisz nazwę miejscowości"></app-input>
+                </div>
+                <div class="field register-field">
+                    <app-input [control]="registerForm.get('street')" label="Ulica" placeholder="Wpisz nazwę ulicy"></app-input>
+                </div>
+                <div class="two fields">
+                    <div class="field register-field">
+                        <app-input [control]="registerForm.get('locationNumber')" label="Numer domu/mieszkania" placeholder="Wpisz numer domu/mieszkania"></app-input>
+                    </div>
+                    <div class="field register-field">
+                        <app-input [control]="registerForm.get('zipCode')" label="Kod pocztowy (dd-ddd)" placeholder="Wpisz kod pocztowy"></app-input>
+                    </div>
+                </div>
+                <div class="ui small error message" 
+                        *ngIf="registerForm.errors?.nonCompletedAddress && passwordTouched(registerForm.get('password')) && passwordTouched(registerForm.get('confirmPassword'))">
+                    Jeśli chcesz dodać adres, żadne z pól nie może być puste
+                </div>
+            </div>
+            <div class="ui small error message" 
+                    *ngIf="isSignUpFailed && isUsernameTaken()">
+                Podana nazwa użytkownika już istnieje w bazie danych
+            </div>
+            <div class="ui small error message" 
+                    *ngIf="isSignUpFailed && isEmailTaken()">
+                Podany email już istnieje w bazie danych
+            </div>
+            <div style="text-align: center;">
+                <button class="positive ui submit formButton button" [disabled]="registerForm.invalid" type="submit">Zarejestruj</button>
+                <button class="ui formButton button" type="button" (click)="onResetForm()">Anuluj</button>
+            </div>
+            <div class="user-link-area">
+                <a routerLink="/login">Masz już konto - zaloguj się</a>
+            </div>
+            <div class="user-link-area">
+                <a routerLink="/odzyskaj-haslo">Odzyskaj hasło</a>
+            </div>
+        </div>
+        
+    </form>
+</div>

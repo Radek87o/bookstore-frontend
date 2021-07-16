@@ -1,0 +1,33 @@
+<div class="ui segment">
+    <h3 class="ui dividing header">
+        Zaloguj się do serwisu
+    </h3>
+    <form class="narrow" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="ui form error success register-form">
+            <div style="text-align: center;">
+                <i class="huge user circle icon"></i>
+            </div>
+            <h4 class="ui dividing header">Dane użytkownika</h4>
+            <div class="field register-field">
+                <app-input [control]="loginForm.get('username')" label="Email/Nazwa użytkownika" placeholder="Wpisz email lub nazwę użytkownika"></app-input>
+            </div>
+            <div class="field register-field">
+                <label class="label">Hasło</label>
+                <input type="password" [formControl]="loginForm.get('password')" placeholder="Wpisz hasło"/>
+            </div>
+            <div class="ui small error message" 
+                    *ngIf="isLoginFailed">
+                Błąd logowania - upewnij się czy dane logowania są poprawne
+            </div>
+            <div style="text-align: center;">
+                <button class="positive ui submit formButton button" [disabled]="loginForm.invalid" type="submit">Zaloguj się</button>
+            </div>
+            <div class="user-link-area">
+                <a routerLink="/rejestracja">Nie masz konta - zarejestruj się</a>
+            </div>
+            <div class="user-link-area">
+                <a routerLink="/odzyskaj-haslo">Odzyskaj hasło</a>
+            </div>
+        </div>
+    </form>
+</div>

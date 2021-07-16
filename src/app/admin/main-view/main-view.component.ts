@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-main-view',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainViewComponent implements OnInit {
 
-  constructor() { }
+  isAdmin: boolean = true;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.authService.isAdminOrModerator();
   }
 
 }

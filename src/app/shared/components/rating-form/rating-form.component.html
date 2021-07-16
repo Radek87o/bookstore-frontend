@@ -4,13 +4,21 @@
   </span>
 </ng-template>
 
-<ngb-rating [(rate)]="userRating" [starTemplate]="star" [max]=5 (rateChange)="onSubmit()"></ngb-rating>
-
-<div class="star-label">
-    <span *ngIf="hasChanged" class="positive">Dziękujemy za oddanie głosu</span>
-    <span *ngIf="!hasChanged" class="negative">Proszę zostaw ocenę</span>
+<div *ngIf="isLoggedIn">
+    <ngb-rating [(rate)]="userRating" [starTemplate]="star" [max]=5 (rateChange)="onSubmit()"></ngb-rating>
+    
+    <div class="star-label">
+        <span *ngIf="hasChanged" class="positive">Dziękujemy za oddanie głosu</span>
+        <span *ngIf="!hasChanged" class="negative">Proszę zostaw ocenę</span>
+    </div>
+    <div class="star-label">
+        <span *ngIf="userRating!==0">Twoja ocena: <b>{{userRating}}</b></span>
+        <span *ngIf="userRating===0">Twoja ocena: <b>brak oceny</b></span>
+    </div>
 </div>
-<div class="star-label">
-    <span *ngIf="userRating!==0">Twoja ocena: <b>{{userRating}}</b></span>
-    <span *ngIf="userRating===0">Twoja ocena: <b>brak oceny</b></span>
+<div *ngIf="!isLoggedIn">
+    <ngb-rating [(rate)]="userRating" [starTemplate]="star" [max]=5 inactive></ngb-rating>
+    <div class="star-label">
+        <span class="negative">Tylko zalogowani użytkownicy mogą oceniać książki</span>
+    </div>
 </div>

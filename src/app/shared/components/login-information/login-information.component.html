@@ -1,0 +1,29 @@
+<table class="login-table" *ngIf="isLoggedIn">
+    <tr>
+        <td>
+            <a class="ui image label" style="margin: 1em; float: right;">
+                <img [src]="profileImage">
+                {{username}}
+                <div class="detail">{{userRole}}</div>
+                </a>
+        </td>
+        <td>
+            <button class="ui small primary button login-button" (click)="logout()">
+                <i class="ui sign out alternate icon"></i>
+                Wyloguj
+            </button>
+        </td>          
+    </tr>
+</table>
+<table class="login-table" *ngIf="!isLoggedIn">
+    <tr>
+        <td>
+            <a class="ui small primary button login-button" routerLink="/login">
+                <i class="ui sign in alternate icon"></i>
+                Zaloguj się
+            </a>
+        </td>
+    </tr>
+</table>
+
+

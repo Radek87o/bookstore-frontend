@@ -2,10 +2,18 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AccountActivationComponent } from './shared/components/account-activation/account-activation.component';
 import { BookDetailsComponent } from './shared/components/book-details/book-details.component';
 import { CartDetailsComponent } from './shared/components/cart-details/cart-details.component';
 import { CheckoutComponent } from './shared/components/checkout/checkout.component';
 import { CommentsListComponent } from './shared/components/comments-list/comments-list.component';
+import { LoginComponent } from './shared/components/login/login.component';
+import { RegisterConfirmationComponent } from './shared/components/register-confirmation/register-confirmation.component';
+import { RegisterComponent } from './shared/components/register/register.component';
+import { ResetPasswordConfirmationComponent } from './shared/components/reset-password-confirmation/reset-password-confirmation.component';
+import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
+import { LoginDto } from './shared/model/dto/login-dto';
+import { ResetPasswordDto } from './shared/model/dto/reset-password-dto';
 
 const routes: Routes = [
   { path: 'nowosci', loadChildren: ()=>import('./novelties/novelties.module').then(m=>m.NoveltiesModule)},
@@ -23,12 +31,18 @@ const routes: Routes = [
    { path: 'autor/:authorId', component: HomeComponent },
    { path: 'koszyk', component: CartDetailsComponent },
    { path: 'zamow', component: CheckoutComponent },
+   { path: 'rejestracja/potwierdzenie', component: RegisterConfirmationComponent },
+   { path: 'rejestracja', component: RegisterComponent },
+   { path: 'login', component: LoginComponent },
+   { path: 'odzyskaj-haslo/potwierdzenie', component: ResetPasswordConfirmationComponent},
+   { path: 'odzyskaj-haslo', component: ResetPasswordComponent},
+   { path: 'aktywuj/:userId', component: AccountActivationComponent },
    { path: '', component: HomeComponent },
-  { path: '**', component: NotFoundComponent }
+   { path: '**', component: NotFoundComponent }
 ];
  
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

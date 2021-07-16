@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RatingDecimalComponent } from './rating-decimal.component';
 
@@ -6,7 +6,7 @@ describe('RatingDecimalComponent', () => {
   let component: RatingDecimalComponent;
   let fixture: ComponentFixture<RatingDecimalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RatingDecimalComponent ]
     })

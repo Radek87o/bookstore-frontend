@@ -1,11 +1,3 @@
-@media only screen and (min-width: 1000px) {
-    .narrow {
-        margin-left: 15em;
-        margin-right: 15em;
-        margin-top: 2em;
-    }
-
-    .formButton {
-        margin: 10px 5px 10px 5px;
-    }
+.formButton {
+    margin: 10px 5px 10px 5px;
 }

@@ -1,0 +1,10 @@
+.login-table {
+    position: absolute; right: 1em; 
+    padding: 1em; 
+    height: fit-content;
+}
+
+.login-button {
+    margin: 0.5em; 
+    float: right;
+}

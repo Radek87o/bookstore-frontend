@@ -10,6 +10,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Book } from 'src/app/shared/model/book';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-add-book-form',
@@ -26,6 +27,7 @@ export class AddBookFormComponent implements OnInit {
   editedBook: Book=new Book();
   title: string = '';
   private urlReg ='(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+  isAdmin: boolean = true;
 
   bookForm: FormGroup = new FormGroup({
     title: new FormControl('', [
@@ -68,9 +70,11 @@ export class AddBookFormComponent implements OnInit {
 
   constructor(private categoryService: CategoryService, 
               private bookService: BookService, 
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.authService.isAdminOrModerator();
     this.categoryService.getCategoriesList().subscribe(
       response=>{
         this.categories=response;
