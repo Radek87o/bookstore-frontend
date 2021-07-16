@@ -33,3 +33,38 @@ i.massive.icon, i.massive.icons {
     text-align: center; 
     margin-top: 1em;
 }
+
+@media only screen and (min-width: 1000px) {
+    .narrow {
+        margin-left: 15em;
+        margin-right: 15em;
+        margin-top: 2em;
+    }
+
+    .formButton {
+        margin: 10px 5px 10px 5px;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .register-field {
+        margin-left: 1rem !important; 
+        margin-right: 1rem !important;
+    }
+}
+
+.register-form {
+    background-color: #DCF8F4; 
+    padding: 1rem;
+    border-radius: 4%;
+}
+
+.user-link-area {
+    text-align: center; 
+    margin-top: 0.5em;
+}
+
+.login-segment {
+    padding-top: 0.1em !important; 
+    padding-bottom: 2.1em !important;
+}

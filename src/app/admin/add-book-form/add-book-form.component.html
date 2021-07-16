@@ -1,8 +1,9 @@
 <div class="ui segment">
-    <h3 class="ui dividing header">
+    <app-not-allowed *ngIf="!isAdmin"></app-not-allowed>
+    <h3 class="ui dividing header" *ngIf="isAdmin">
         Dodawanie i edycja książki
     </h3>
-    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" *ngIf="isAdmin">
         <div class="ui form error success">
             <div class="three fields">
                 <div class="field">
@@ -12,7 +13,8 @@
                     <app-input [control]="bookForm.get('subtitle')" label="Podtytuł"></app-input>
                 </div>
                 <div class="field">
-                    <app-input [control]="bookForm.get('imageUrl')" label="Link do okładki" placeholder="Wpisz url"></app-input>    
+                    <app-input [control]="bookForm.get('imageUrl')" label="Link do okładki" placeholder="Wpisz url">
+                    </app-input>
                 </div>
             </div>
             <div class="three fields">
@@ -35,21 +37,21 @@
                     <app-input [control]="bookForm.get('pages')" label="Liczba stron"></app-input>
                 </div>
                 <div class="field">
-                    <app-input [control]="bookForm.get('basePrice')" label="Cena standardowa" 
-                                placeholder="Cena w PLN"></app-input>
+                    <app-input [control]="bookForm.get('basePrice')" label="Cena standardowa" placeholder="Cena w PLN">
+                    </app-input>
                 </div>
                 <div class="field">
-                    <app-input [control]="bookForm.get('promoPrice')" label="Cena Promocyjna"
-                                placeholder="Cena w PLN"></app-input>
+                    <app-input [control]="bookForm.get('promoPrice')" label="Cena Promocyjna" placeholder="Cena w PLN">
+                    </app-input>
                 </div>
             </div>
             <div class="three fields">
                 <div class="field">
                     <label>Kategorie (wybierz co najmniej jedną):</label>
-                    <select multiple="true" [formControl]="bookForm.get('categories')" (change)="modifyBookCategories($event.target.value)">
+                    <select multiple="true" [formControl]="bookForm.get('categories')"
+                        (change)="modifyBookCategories($event.target.value)">
                         <ng-container *ngFor="let category of categories">
-                            <option [value]="category.id"
-                                    [selected]="isCurrentBookCategory(category)">
+                            <option [value]="category.id" [selected]="isCurrentBookCategory(category)">
                                 {{category.name}}
                             </option>
                         </ng-container>
@@ -81,7 +83,8 @@
                     </div>
                 </div>
                 <div class="field">
-                    <app-input [control]="bookForm.get('unitsInStock')" label="Liczba dostępnych egzemplarzy"></app-input>
+                    <app-input [control]="bookForm.get('unitsInStock')" label="Liczba dostępnych egzemplarzy">
+                    </app-input>
                 </div>
             </div>
             <div class="field">
@@ -94,17 +97,11 @@
         <div *ngIf="bookAdded" class="ui success message">Książka została zapisana</div>
         <div *ngIf="bookAddedInvalid" class="ui error message">Wystąpił błąd przy próbie dodania książki</div>
         <div style="text-align: center">
-            <button *ngIf="!editMode" 
-                    class="positive ui submit button" 
-                    [disabled]="bookForm.invalid" 
-                    type="submit">
-                    Dodaj książkę
+            <button *ngIf="!editMode" class="positive ui submit button" [disabled]="bookForm.invalid" type="submit">
+                Dodaj książkę
             </button>
-            <button *ngIf="editMode" 
-                    class="positive ui submit button" 
-                    [disabled]="bookForm.invalid" 
-                    type="submit">
-                    Edytuj książkę
+            <button *ngIf="editMode" class="positive ui submit button" [disabled]="bookForm.invalid" type="submit">
+                Edytuj książkę
             </button>
             <button *ngIf="!editMode" class="ui button" type="button" (click)="onResetForm()">
                 Wyczyść formularz

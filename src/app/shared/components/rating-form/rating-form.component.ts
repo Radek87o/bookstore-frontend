@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RatingDto } from '../../model/dto/rating-dto';
+import { AuthService } from '../../services/auth.service';
 import { RatingService } from '../../services/rating.service';
 
 @Component({
@@ -10,24 +11,30 @@ import { RatingService } from '../../services/rating.service';
 })
 export class RatingFormComponent implements OnInit {
 
-  private userId: string  = '408a2c8b-ea95-4c81-b952-2e4a124a1b50';
+  private userId: string  = '';
   userRating: number = 0;
   hasChanged: boolean = false;
+  isLoggedIn: boolean = false;
 
-  constructor(private ratingService: RatingService, private route: ActivatedRoute) { }
+  constructor(private ratingService: RatingService, 
+              private route: ActivatedRoute,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
-    const bookId = this.route.snapshot.paramMap.get('id');
-    this.ratingService.getBookRating(bookId, this.userId).subscribe(
-      response => {
-        this.userRating=response.vote;
-      }
-    )
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if(this.isLoggedIn) {
+      this.userId = this.authService.getUserFromLocalCache()?.id;
+      const bookId = this.route.snapshot.paramMap.get('id');
+      this.ratingService.getBookRating(bookId, this.userId).subscribe(
+        response => {
+          this.userRating=response.vote;
+        }
+      )
+    }
   }
 
   onSubmit() {
     let rating = new RatingDto()
-    console.log("zmiana")
     rating.vote=this.userRating;
     const bookId = this.route.snapshot.paramMap.get('id');
     this.ratingService.saveBookRating(rating, bookId, this.userId).subscribe();

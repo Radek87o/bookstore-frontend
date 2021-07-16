@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/shared/model/book';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { BookService } from 'src/app/shared/services/book.service';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 
@@ -10,7 +11,9 @@ import { NavigationService } from 'src/app/shared/services/navigation.service';
 })
 export class BooksListComponent implements OnInit {
 
-  constructor(private bookService: BookService, private navigationService: NavigationService) { }
+  constructor(private bookService: BookService, 
+              private navigationService: NavigationService, 
+              private authService: AuthService) { }
 
   keyword: string = '';
   books: Book[] = [];
@@ -18,8 +21,10 @@ export class BooksListComponent implements OnInit {
   pageSize: number = 20;
   totalElements: number = 0;
   totalPages: number = 0;
+  isAdmin: boolean = true;
 
   ngOnInit(): void {
+    this.isAdmin = this.authService.isAdminOrModerator();
     this.pageNumber = this.navigationService.adminPageNumber ? this.navigationService.adminPageNumber : 1;
     this.pageSize = this.navigationService.adminPageSize ? this.navigationService.adminPageSize : 20
     this.retrieveBooks();

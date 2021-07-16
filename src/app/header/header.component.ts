@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/services/auth.service';
 import { NavigationService } from '../shared/services/navigation.service';
 
 @Component({
@@ -9,11 +10,14 @@ import { NavigationService } from '../shared/services/navigation.service';
 })
 export class HeaderComponent implements OnInit {
 
-  isAdminView: boolean = true;
+  isAdminView: boolean = false;
 
-  constructor(private router: Router, private navigationService: NavigationService) { }
+  constructor(private router: Router, 
+              private navigationService: NavigationService, 
+              private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.isAdminView = this.authService.isAdminOrModerator();
   }
 
   redirectToMainPage() {

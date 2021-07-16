@@ -1,0 +1,35 @@
+<div class="ui segment">
+    <div *ngIf="isActivationSuccessful">
+        <div class="not-found-info">
+            <i class="massive lock open icon"></i>
+            <h2>
+                Twoje konto zostało aktywowane.  
+            </h2>
+            <div class="ui success message">
+                <h3>
+                    Możesz przejść do strony logowania i zalogować się do serwisu.   
+                </h3>
+            </div>
+            <div>
+                <a class="ui huge blue button" routerLink="/login">Przejdź do strony logowania</a>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isActivationSuccessful">
+        <div class="not-found-info">
+            <i class="massive lock icon"></i>
+            <h2>
+                Wystąpił błąd przy próbie aktywacji.  
+            </h2>
+            <div class="ui error message">
+                <h3>
+                    Spróbuj ponowić proces rejestracji   
+                </h3>
+            </div>
+            <div>
+                <a class="ui huge blue button" routerLink="/login">Przejdź do strony logowania</a>
+            </div>
+        </div>
+    </div>
+</div>
+

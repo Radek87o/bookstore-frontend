@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Comment } from '../../model/comment';
 import { CommentDto } from '../../model/dto/comment-dto';
+import { AuthService } from '../../services/auth.service';
 import { CommentListResponse, CommentService } from '../../services/comment.service';
 
 @Component({
@@ -14,7 +15,7 @@ import { CommentListResponse, CommentService } from '../../services/comment.serv
 })
 export class CommentsListComponent implements OnInit {
 
-  private userId: string  = '408a2c8b-ea95-4c81-b952-2e4a124a1b50';
+  private userId: string  = '';
   
   bookComments: Comment[]=[];
   pageNumber: number = 1;
@@ -22,16 +23,23 @@ export class CommentsListComponent implements OnInit {
   totalPages: number = 0;
   totalElements: number = 0;
   commentSaved: boolean = false; 
-  commentSavedError: boolean = false; 
+  commentSavedError: boolean = false;
+  isLoggedIn: boolean = false; 
 
   commentsForm = new FormGroup({
     content: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255)])
   }) 
 
-  constructor(private commentService: CommentService, private route: ActivatedRoute) { }
+  constructor(private commentService: CommentService, 
+              private route: ActivatedRoute, 
+              private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getBookCommentsPage();
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if(this.isLoggedIn) {
+      this.userId = this.authService.getUserFromLocalCache()?.id;
+    }
   }
 
   getBookCommentsPage() {
