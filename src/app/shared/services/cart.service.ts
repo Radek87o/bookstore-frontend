@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { NotificationsService } from 'src/app/notifications/notifications.service';
 import { CartItem } from '../model/cart-item';
 
 @Injectable({
@@ -12,13 +13,13 @@ export class CartService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
-  constructor() { }
+  constructor(private notificationsService: NotificationsService) { }
 
   addToCart(newCartItem: CartItem) {
     let alreadyExistsInCart: boolean = false;
     let existingCartItem: CartItem = undefined;
 
-    if(this.cartItems.length>0) {
+    if(this.cartItems?.length>0) {
       existingCartItem = this.cartItems.find(cartItem => cartItem.id===newCartItem.id)
     }
     alreadyExistsInCart = existingCartItem!=undefined;
@@ -26,8 +27,10 @@ export class CartService {
     if(alreadyExistsInCart) {
       existingCartItem.quantity++;
     } else {
-      this.cartItems.push(newCartItem);
+      this.cartItems?.push(newCartItem);
     }
+    this.notificationsService.addSuccess(`Dodano książkę do koszyka`)
+    this.addCartItemsToLocalCache(this.cartItems);
     this.computeCartTotals();
   }
 
@@ -35,13 +38,18 @@ export class CartService {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
     
-    this.cartItems.forEach(cartItem => {
+    this.cartItems?.forEach(cartItem => {
       totalQuantityValue+=cartItem.quantity;
       totalPriceValue+=cartItem.unitPrice*cartItem.quantity;
     })
 
     this.totalQuantity.next(totalQuantityValue);
     this.totalPrice.next(totalPriceValue);
+  }
+
+  computeCartTotalsForLocalCache(items: CartItem[]) {
+    this.cartItems = items;
+    this.computeCartTotals();
   }
 
   decrementQuantity(cartItem: CartItem) {
@@ -51,7 +59,8 @@ export class CartService {
       this.removeFromCartItem(cartItem);
     } else {
       this.computeCartTotals();
-    } 
+    }
+    this.addCartItemsToLocalCache(this.cartItems) 
   }
 
   removeFromCartItem(cartItem: CartItem) {
@@ -61,5 +70,17 @@ export class CartService {
       this.cartItems.splice(cartItemIndex, 1);
     }
     this.computeCartTotals();
+  }
+
+  private addCartItemsToLocalCache(items: CartItem[]) {
+    localStorage.setItem('cart', JSON.stringify(items));
+  }
+
+  getCartItemsFromLocalCache() : CartItem[] {
+    return JSON.parse(localStorage.getItem('cart'));
+  }
+
+  removeCartItemsFromLocalCache() {
+    localStorage.removeItem('cart');
   }
 }

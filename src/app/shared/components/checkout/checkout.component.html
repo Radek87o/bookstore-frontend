@@ -60,6 +60,37 @@
                     </div>
                 </div>
             </div>
+            <h4 class="ui dividing header">Dane karty kredytowej:</h4>
+            <div formGroupName="creditCard">
+                <div class="field">
+                    <app-input [control]="checkoutFormGroup.get('creditCard').get('cardNumber')" label="Numer karty kredytowej"></app-input>
+                </div>
+                <div class="fields">
+                    <div class="six wide field">
+                        <app-input [control]="checkoutFormGroup.get('creditCard').get('securityCode')" label="Kod CVV"></app-input>
+                    </div>
+                    <div class="five wide field">
+                        <label>Ważna do (rok):</label>
+                        <select class="ui search dropdown" [formControl]="checkoutFormGroup.get('creditCard').get('expirationYear')" (change)="handleMonthsAndYears()">
+                            <option value=""></option>
+                            <option *ngFor="let year of creditCardYears">{{year}}</option>
+                        </select>
+                        <div *ngIf="isFormInvalid(checkoutFormGroup.get('creditCard').get('expirationYear'))" class="ui small error message">
+                            To pole nie może być puste
+                        </div>
+                    </div>
+                    <div class="five wide field">
+                        <label>Ważna do (miesiąc):</label>
+                        <select class="ui search dropdown" [formControl]="checkoutFormGroup.get('creditCard').get('expirationMonth')">
+                            <option value=""></option>
+                            <option *ngFor="let month of creditCardMonths">{{month}}</option>
+                        </select>
+                        <div *ngIf="isFormInvalid(checkoutFormGroup.get('creditCard').get('expirationMonth'))" class="ui small error message">
+                            To pole nie może być puste
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="ui info message transition" style="text-align: center;">
                 <div class="header">
                     Podsumowanie zamówienia

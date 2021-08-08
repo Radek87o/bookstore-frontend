@@ -1,0 +1,21 @@
+@media only screen and (min-width: 1000px) {
+    :host {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        right: 10em;
+        width: 300px;
+        z-index: 10;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    :host {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        right: 1em;
+        width: 300px;
+        z-index: 10;
+    }
+}

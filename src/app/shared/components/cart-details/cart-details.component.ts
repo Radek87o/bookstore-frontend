@@ -12,6 +12,7 @@ export class CartDetailsComponent implements OnInit {
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
+  localData: boolean = false;
 
   constructor(private cartService: CartService) { }
 
@@ -21,6 +22,11 @@ export class CartDetailsComponent implements OnInit {
 
   listCartDetails() {
     this.cartItems = this.cartService.cartItems;
+    if(this.cartItems?.length===0) {
+      this.cartItems = this.cartService.getCartItemsFromLocalCache()
+      this.localData = true;
+      this.cartService.computeCartTotalsForLocalCache(this.cartItems)
+    }
 
     this.cartService.totalPrice.subscribe(
       data => this.totalPrice=data
@@ -30,7 +36,9 @@ export class CartDetailsComponent implements OnInit {
       data=>this.totalQuantity=data
     );
 
-    this.cartService.computeCartTotals();
+    if(!this.localData) {
+      this.cartService.computeCartTotals();
+    }
   }
 
   incrementCartItem(cartItem: CartItem) {

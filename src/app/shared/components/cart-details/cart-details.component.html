@@ -1,8 +1,8 @@
 <div class="ui segment">
-    <h3 class="ui dividing header" *ngIf="cartItems.length>0">
+    <h3 class="ui dividing header" *ngIf="cartItems?.length>0">
         Lista zamówionych książek:
     </h3>
-    <table class="ui padded table" *ngIf="cartItems.length>0">
+    <table class="ui padded table" *ngIf="cartItems?.length>0">
         <tbody>
             <tr *ngFor="let cartItem of cartItems">
                 <td class="two wide">
@@ -25,7 +25,7 @@
                     <div>
                         <button class="mini ui blue button" (click)="decrementCartItem(cartItem)">-</button>
                         <span style="margin-left: 20px; margin-right: 20px;"><b>{{cartItem.quantity}}</b></span>
-                        <button class="mini ui blue button" (click)="incrementCartItem(cartItem)">+</button>
+                        <button class="mini ui blue button" [disabled]="cartItem.quantity>=cartItem.unitsInStock" (click)="incrementCartItem(cartItem)">+</button>
                     </div>
                     <p style="margin-top: 10px;">
                         Cena całkowita: <b>{{cartItem.quantity * cartItem.unitPrice | priceDisplay}} zł</b> 
@@ -46,7 +46,7 @@
             </tr>
         </tfoot>
     </table>
-    <div *ngIf="cartItems.length===0" class="ui segment">
+    <div *ngIf="cartItems?.length===0 || !this.cartItems" class="ui segment">
         <h1 style="text-align: center;">Twój koszyk jest wciąż pusty</h1>
         <img class="ui centered large image" src="/assets/images/empty-empty-cart-icon-png.png">
     </div>

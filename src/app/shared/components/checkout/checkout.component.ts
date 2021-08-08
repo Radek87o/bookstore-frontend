@@ -10,6 +10,9 @@ import { Order } from '../../model/order';
 import { OrderItem } from '../../model/order-item';
 import { Purchase } from '../../model/purchase';
 import { Router } from '@angular/router';
+import { CreditCardService } from '../../services/credit-card.service';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../model/user';
 
 @Component({
   selector: 'app-checkout',
@@ -27,37 +30,53 @@ export class CheckoutComponent implements OnInit {
   orderAdded: boolean = false;
   orderAddedInvalid: boolean = false;
   checkoutFormGroup: FormGroup
-  
-  
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
+  isUserLoggedIn: boolean = false;
+  currentUser: User;
 
   constructor(private categoryService: CategoryService,
               private cartService: CartService,
               private checkoutService: CheckoutService,
+              private creditCardService: CreditCardService,
+              private authService: AuthService,
               private formBuilder: FormBuilder,
               private router: Router) { 
   }
 
   ngOnInit(): void {
+    const startMonth: number = new Date().getMonth()+1;
+    this.creditCardService.getCreditCardMonths(startMonth).subscribe(
+      data=>this.creditCardMonths = data
+    );
+    this.creditCardService.getCreditCardYears().subscribe(
+      data=>this.creditCardYears = data
+    );
+
+    this.isUserLoggedIn = this.authService.isLoggedIn()
+    if(this.isUserLoggedIn) {
+      this.currentUser = this.authService.getUserFromLocalCache();
+    }  
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: new FormControl('', [Validators.required, 
+        firstName: new FormControl(this.isUserLoggedIn ? this.currentUser.firstName : '', [Validators.required, 
                                         Validators.minLength(2), 
                                         BookStoreValidators.notOnlyWhitespace]),
-        lastName: new FormControl('', [Validators.required, 
+        lastName: new FormControl(this.isUserLoggedIn ? this.currentUser.lastName : '', [Validators.required, 
                                       Validators.minLength(2), 
                                       BookStoreValidators.notOnlyWhitespace]),
-        email: new FormControl('', [Validators.required, Validators.pattern(this.emailPattern)])
+        email: new FormControl(this.isUserLoggedIn ? this.currentUser.email : '', [Validators.required, Validators.pattern(this.emailPattern)])
       }),
       shippingAddress: this.formBuilder.group({
-        city: new FormControl('', [Validators.required, 
+        city: new FormControl(this.isUserLoggedIn ? this.currentUser.address?.city : '', [Validators.required, 
                                   Validators.minLength(2), 
                                   BookStoreValidators.notOnlyWhitespace]),
-        street: new FormControl('', [Validators.required, 
+        street: new FormControl(this.isUserLoggedIn ? this.currentUser.address?.street : '', [Validators.required, 
                                     Validators.minLength(2), 
                                     BookStoreValidators.notOnlyWhitespace]),
-        locationNumber: new FormControl('', [Validators.required, BookStoreValidators.notOnlyWhitespace]),
-        zipCode: new ZipCodeControl('', [Validators.required, Validators.pattern(this.zipCodePattern)])
+        locationNumber: new FormControl(this.isUserLoggedIn ? this.currentUser.address?.locationNumber : '', [Validators.required, BookStoreValidators.notOnlyWhitespace]),
+        zipCode: new ZipCodeControl(this.isUserLoggedIn ? this.currentUser.address?.zipCode : '', [Validators.required, Validators.pattern(this.zipCodePattern)])
       }),
       billingAddress: new FormGroup({
         city: new FormControl('', [Validators.required, 
@@ -68,6 +87,12 @@ export class CheckoutComponent implements OnInit {
                                     BookStoreValidators.notOnlyWhitespace]),
         locationNumber: new FormControl('', [Validators.required, BookStoreValidators.notOnlyWhitespace]),
         zipCode: new ZipCodeControl('', [Validators.required, Validators.pattern(this.zipCodePattern)])
+      }),
+      creditCard: this.formBuilder.group({
+        cardNumber: new FormControl('', [Validators.required, Validators.pattern('^[1-9][0-9]{15}$')]),
+        securityCode: new FormControl('', [Validators.required, Validators.pattern('^[1-9][0-9]{2}$')]),
+        expirationMonth: new FormControl('', [Validators.required]),
+        expirationYear: new FormControl('', [Validators.required])
       })
     })
     
@@ -91,6 +116,7 @@ export class CheckoutComponent implements OnInit {
     purchase.customer = this.checkoutFormGroup.get("customer").value;
     purchase.shippingAddress = this.checkoutFormGroup.get("shippingAddress").value;
     purchase.billingAddress = this.checkoutFormGroup.get("billingAddress").value;
+    purchase.creditCard = this.checkoutFormGroup.get("creditCard").value;
     purchase.order = order;
     purchase.orderItems = orderItems;
 
@@ -99,6 +125,7 @@ export class CheckoutComponent implements OnInit {
         next: response => {
           this.checkoutFormGroup.reset();
           this.orderAdded=true;
+          this.cartService.removeCartItemsFromLocalCache();
           setTimeout(()=>this.resetCart(), 3000);
         },
         error: err => {
@@ -144,5 +171,29 @@ export class CheckoutComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  isFormInvalid(control: any){
+    const {dirty, touched, errors} = control;
+    return dirty && touched && errors;
+  }
+
+  handleMonthsAndYears() {
+    const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
+    
+    const currentYear: number = new Date().getFullYear();
+    const selectedYear: number = Number(creditCardFormGroup.value.expirationYear);
+
+    let startMonth: number;
+    
+    if(currentYear===selectedYear) {
+      startMonth = new Date().getMonth()+1;
+    } else {
+      startMonth = 1;
+    }
+
+    this.creditCardService.getCreditCardMonths(startMonth).subscribe(
+      data => this.creditCardMonths = data
+    );
   }
 }

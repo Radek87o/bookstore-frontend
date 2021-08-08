@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SharedModule } from './shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationsModule } from './notifications/notifications.module';
 
 import {AuthInterceptor} from './shared/config/auth.interceptor';
 import { AuthenticationGuard } from './shared/config/authentication.guard';
@@ -41,6 +42,7 @@ import { RatingService } from './shared/services/rating.service';
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
+    NotificationsModule,
     NgbModule,
     ReactiveFormsModule,
     FormsModule
