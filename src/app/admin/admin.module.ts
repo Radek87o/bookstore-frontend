@@ -8,10 +8,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainViewComponent } from './main-view/main-view.component';
 import { BooksListComponent } from './books-list/books-list.component';
+import { UsersListComponent } from './users-list/users-list.component';
+import { AddUserFormComponent } from './add-user-form/add-user-form.component';
 
 
 @NgModule({
-  declarations: [AddBookFormComponent, MainViewComponent, BooksListComponent],
+  declarations: [AddBookFormComponent, MainViewComponent, BooksListComponent, UsersListComponent, AddUserFormComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

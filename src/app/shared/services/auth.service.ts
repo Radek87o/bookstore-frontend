@@ -34,7 +34,6 @@ export class AuthService {
     this.loggedInUsername=null;
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    localStorage.removeItem('users');
   }
 
   saveToken(token: string) : void {

@@ -1,0 +1,112 @@
+<div class="ui segment">
+    <app-not-allowed *ngIf="!isAdminOrModerator"></app-not-allowed>
+    <h3 class="ui dividing header" *ngIf="isAdminOrModerator">
+        Lista użytkowników:
+    </h3>
+    <div class="ui fluid action concentrated input" style="margin-bottom: 1em; display: flex;" *ngIf="isAdminOrModerator">
+        <input #userInput type="text" placeholder="Szukaj książki..."
+            (keyup.enter)="findUsersByKeyword(userInput.value)">
+        <div class="ui primary button" (click)="findUsersByKeyword(userInput.value)">
+            <i class="search plus icon"></i>
+            Szukaj
+        </div>
+        <button class="ui primary button" style="margin-left: 1em; margin-right: 1em;" routerLink="/admin/uzytkownicy/dodaj">
+            <i class="user outline icon"></i>
+            Dodaj
+        </button> 
+
+    </div>
+    
+    <div *ngIf="isAdminOrModerator">
+        <label style="margin-right: 1em;">Liczba wyników:</label>
+        <select (change)="updatePageSize($event.target.value)">
+            <option [selected]="this.pageSize===10">10</option>
+            <option [selected]="this.pageSize===20">20</option>
+            <option [selected]="this.pageSize===50">50</option>
+            <option [selected]="this.pageSize===100">100</option>
+        </select>
+        <label style="margin-left: 1em; margin-right: 0.1em;">Strona:</label>
+        <label><b>{{pageNumber}}</b></label>
+    </div>
+    <div *ngIf="keyword.length>0 && isAdmin" style="margin-top: 0.5em;">
+        <label style="margin-right: 0.1em; text-decoration: underline;">Wyniki wyszukiwania dla:</label>
+        <label style="margin-left: 0.5em; text-decoration: underline;"><b>{{keyword}}</b></label>
+        <button class="ui button transparent" (click)="resetKeyword()">
+            <i class="ui icon window close"></i>
+        </button>
+    </div>
+    <div *ngIf="users.length>0 && isAdminOrModerator">
+        <table class="ui padded table" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th class="two wide"></th>
+                    <th class="five wide">Użytkownik</th>
+                    <th class="three wide">Email</th>
+                    <th class="three wide">Ostatnie logowanie</th>
+                    <th class="three wide">Edycja</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>
+                        <img *ngIf="user.profileImageUrl" 
+                                [src]="user.profileImageUrl" 
+                                class="ui rounded custom-imageUrl image" />
+                        <img *ngIf="!user.profileImageUrl" 
+                                src="/assets/images/user1-64x64.png" 
+                                class="ui rounded custom-imageUrl image"/>
+                    </td>
+                    <td>
+                        <div class="content">
+                            <div class="ui small header" style="text-align: center;">
+                                <a routerLink="/ksiazka/{{user.id}}" class="custom-userLink">
+                                    {{user.firstName}} {{user.lastName}}
+                                </a>
+                            </div>
+                            <div class="ui meta" *ngIf="user.username">
+                                Nazwa użytkownika: <b>{{user.username}}</b>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="content">
+                            <div class="ui small header">
+                                {{user.email}}         
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="content"*ngIf="user.lastLoginDate">
+                            {{user.lastLoginDate | date: 'yyyy-MM-dd HH:mm'}}
+                        </div>
+                        <div class="content" *ngIf="!user.lastLoginDate">
+                            b.d.
+                        </div>
+                    </td>
+                    <td class="middle aligned" style="display: flex;">
+                        <button class="ui primary button" routerLink="/admin/uzytkownicy/edytuj/{{user.id}}">
+                            Edytuj
+                        </button>
+                        <button class="ui negative button" (click)="deleteUser(user)" *ngIf="isAdmin">
+                            Usuń
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-top: 1em;" *ngIf="totalPages>1">
+            <ngb-pagination class="d-flex justify-content-center" [(page)]="pageNumber" [pageSize]="pageSize"
+                [collectionSize]="totalElements" (pageChange)="changePage()" [rotate]="true" [ellipses]="false"
+                [boundaryLinks]="true">
+            </ngb-pagination>
+        </div>
+    </div>
+    <div *ngIf="users.length==0 && keyword.length>0 && isAdminOrModerator">
+        <div class="not-found-info">
+            <i class="massive frown outline icon"></i>
+            <h2>
+                Niestety, nie znaleźliśmy wyników dla Twojego wyszukiwania
+            </h2>
+        </div>
+    </div>
+</div>
