@@ -1,0 +1,88 @@
+<div class="ui segment">
+    <app-not-allowed *ngIf="!isAdminOrModerator"></app-not-allowed>
+    <h3 class="ui dividing header" *ngIf="isAdminOrModerator">
+        Dodawanie i edycja użytkownika
+    </h3>
+    <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()" class="narrow"  *ngIf="isAdminOrModerator">
+        <div class="ui form error success">
+            <div style="text-align: center;">
+                <i class="huge user circle icon"></i>
+            </div>
+            <h4 class="ui dividing header">Dane użytkownika</h4>
+            <div class="field register-field">
+                <app-input [control]="addUserForm.get('firstName')" label="Imię" placeholder="Wpisz imię"></app-input>
+            </div>
+            <div class="field register-field">
+                <app-input [control]="addUserForm.get('lastName')" label="Nazwisko" placeholder="Wpisz nazwisko"></app-input>
+            </div>
+            <div class="field register-field">
+                <app-input [control]="addUserForm.get('username')" label="Nazwa użytkownika" placeholder="Wpisz nazwę użytkownika"></app-input>    
+            </div>
+            <div class="field register-field">
+                <app-input [control]="addUserForm.get('email')" [disabled]="editMode" label="Email" placeholder="Wpisz adres email"></app-input>    
+            </div>
+            <div class="two field">
+                <div class="ui checkbox" style="margin: 1em;">
+                    <input type="checkbox" [formControl]="addUserForm.get('active')">
+                    <label>Konto aktywne</label>
+                </div>
+                <div class="ui checkbox" style="margin: 1em;">
+                    <input type="checkbox" [formControl]="addUserForm.get('notLocked')">
+                    <label>Konto niezablokowane</label>
+                </div>
+            </div>
+            <div class="field" *ngIf="isAdmin">
+                <label>Rola użytkownika</label>
+                <select class="ui search dropdown" [formControl]="addUserForm.get('role')">
+                    <option value="user">Użytkownik</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" (change)="changeAddressDataVisibility($event)" [checked]="showAddressForm">
+                  <label><b>Dodaj dane adresowe (opcjonalnie)</b></label>
+                </div>
+            </div>
+            <div *ngIf="showAddressForm">
+                <h4 class="ui dividing header">Dane adresowe</h4>
+                <div class="field register-field">
+                    <app-input [control]="addUserForm.get('city')" label="Miejscowość" placeholder="Wpisz nazwę miejscowości"></app-input>
+                </div>
+                <div class="field register-field">
+                    <app-input [control]="addUserForm.get('street')" label="Ulica" placeholder="Wpisz nazwę ulicy"></app-input>
+                </div>
+                <div class="two fields">
+                    <div class="field register-field">
+                        <app-input [control]="addUserForm.get('locationNumber')" label="Numer domu/mieszkania" placeholder="Wpisz numer domu/mieszkania"></app-input>
+                    </div>
+                    <div class="field register-field">
+                        <app-input [control]="addUserForm.get('zipCode')" label="Kod pocztowy (dd-ddd)" placeholder="Wpisz kod pocztowy"></app-input>
+                    </div>
+                </div>
+                <div class="ui small error message" 
+                        *ngIf="addUserForm.errors?.nonCompletedAddress">
+                    Jeśli chcesz dodać adres, żadne z pól nie może być puste
+                </div>
+            </div>
+            <div class="ui small error message" 
+                    *ngIf="addingUserFailed && isUsernameTaken()">
+                Podana nazwa użytkownika już istnieje w bazie danych
+            </div>
+            <div class="ui small error message" 
+                    *ngIf="addingUserFailed && isEmailTaken()">
+                Podany email już istnieje w bazie danych
+            </div>
+            <div class="ui small error message" 
+                    *ngIf="addingUserFailed && !isEmailTaken() && !isUsernameTaken()">
+                Wystąpił niespodziewany błąd - skontaktuj się z administratorem 
+            </div>
+            <div style="text-align: center;">
+                <button class="positive ui submit formButton button" *ngIf="!editMode" [disabled]="addUserForm.invalid" type="submit">Dodaj użytkownika</button>
+                <button class="positive ui submit formButton button" *ngIf="editMode" [disabled]="addUserForm.invalid" type="submit">Edytuj użytkownika</button>
+                <button class="ui formButton button" type="button" (click)="onResetForm()">Anuluj</button>
+            </div>
+        </div>
+    </form>
+</div>

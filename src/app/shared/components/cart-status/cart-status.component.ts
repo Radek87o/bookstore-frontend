@@ -27,7 +27,7 @@ export class CartStatusComponent implements OnInit {
     this.cartService.totalQuantity.subscribe(
       data=>{
         this.totalQuantity=data;
-        if(this.cartService.getCartItemsFromLocalCache().length>0) {
+        if(this.cartService.getCartItemsFromLocalCache()?.length>0) {
           this.totalQuantity = this.cartService.getCartItemsFromLocalCache().length
         }
       }

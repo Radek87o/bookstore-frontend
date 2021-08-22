@@ -68,3 +68,7 @@ i.massive.icon, i.massive.icons {
     padding-top: 0.1em !important; 
     padding-bottom: 2.1em !important;
 }
+
+.transparent {
+    background-color: white !important;
+}

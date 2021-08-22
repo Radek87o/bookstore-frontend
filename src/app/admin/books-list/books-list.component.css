@@ -2,10 +2,6 @@
     margin: 0;
 }
 
-.transparent {
-    background-color: white !important;
-}
-
 .custom-imageUrl {
     width: 70px; margin: 2px; 
     margin-left: 10px;
