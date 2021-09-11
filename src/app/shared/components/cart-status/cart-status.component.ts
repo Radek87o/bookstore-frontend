@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-cart-status',
@@ -28,7 +29,8 @@ export class CartStatusComponent implements OnInit {
       data=>{
         this.totalQuantity=data;
         if(this.cartService.getCartItemsFromLocalCache()?.length>0) {
-          this.totalQuantity = this.cartService.getCartItemsFromLocalCache().length
+          let currentItems = this.cartService.getCartItemsFromLocalCache();
+          this.totalQuantity = _.sumBy(currentItems, 'quantity');
         }
       }
     )

@@ -27,7 +27,8 @@
                     <label>Konto aktywne</label>
                 </div>
                 <div class="ui checkbox" style="margin: 1em;">
-                    <input type="checkbox" [formControl]="addUserForm.get('notLocked')">
+                    <input type="checkbox" [formControl]="addUserForm.get('notLocked')" 
+                    [checked]="!this.editMode || this.editedUser?.notLocked">
                     <label>Konto niezablokowane</label>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { AccountActivationComponent } from './shared/components/account-activation/account-activation.component';
 import { BookDetailsComponent } from './shared/components/book-details/book-details.component';
 import { CartDetailsComponent } from './shared/components/cart-details/cart-details.component';
@@ -12,13 +12,11 @@ import { RegisterConfirmationComponent } from './shared/components/register-conf
 import { RegisterComponent } from './shared/components/register/register.component';
 import { ResetPasswordConfirmationComponent } from './shared/components/reset-password-confirmation/reset-password-confirmation.component';
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
-import { LoginDto } from './shared/model/dto/login-dto';
-import { ResetPasswordDto } from './shared/model/dto/reset-password-dto';
 
 const routes: Routes = [
-  { path: 'nowosci', loadChildren: ()=>import('./novelties/novelties.module').then(m=>m.NoveltiesModule)},
   { path: 'promocje', loadChildren: ()=>import('./promos/promos.module').then(m=>m.PromosModule)},
   { path: 'admin', loadChildren: ()=>import('./admin/admin.module').then(m=>m.AdminModule)},
+  { path: 'uzytkownik', loadChildren: ()=>import('./user/user.module').then(m=>m.UserModule)},
   { 
     path: 'ksiazka/:id', 
     component: BookDetailsComponent,

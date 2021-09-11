@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Rating } from '../model/rating'
-import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { RatingDto } from '../model/dto/rating-dto';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RatingService {
 
-  private baseUrl: string = 'http://localhost:8080/api/ratings';
+  private baseUrl: string = `${environment.apiUrl}/api/ratings`;
 
   constructor(private http: HttpClient) { }
 

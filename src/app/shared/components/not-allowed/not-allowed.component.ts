@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-not-allowed',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./not-allowed.component.css']
 })
 export class NotAllowedComponent implements OnInit {
+
+  @Input() notLoggedIn: boolean = false;
 
   constructor() { }
 

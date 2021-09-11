@@ -1,0 +1,86 @@
+<div class="ui segment">
+    <div class="ui middle aligned centered stackable grid" *ngIf="!isAdminView">
+        <div class="computer only four wide column">
+            <a (click)="redirectToMainPage()">
+                <img class="ui small centered rounded image" src="/assets/images/companyYourLogo.png">
+            </a>
+        </div>
+        <div class="computer only eight wide column">
+            <div class="ui search">
+                <app-search-input></app-search-input>
+            </div>
+        </div>
+        <div class="computer only two wide column">
+            <div class="ui compact fluid menu">
+                <button class="ui fluid basic button item" (click)="linkToUserPanel()">
+                    <i class="icon user"></i>
+                </button>
+            </div>
+        </div>
+        <div class="computer only two wide column">
+            <app-cart-status></app-cart-status>
+        </div>
+    </div>
+    <div class="ui middle aligned centered stackable grid" *ngIf="isAdminView">
+        <div class="computer only four wide column">
+            <a (click)="redirectToMainPage()">
+                <img class="ui small centered rounded image" src="/assets/images/companyYourLogo.png">
+            </a>
+        </div>
+        <div class="computer only six wide column">
+            <div class="ui search">
+                <app-search-input></app-search-input>
+            </div>
+        </div>
+        <div class="computer only two wide column">
+            <div class="ui compact fluid menu">
+                <button class="ui fluid basic button item" (click)="linkToUserPanel()">
+                    <i class="icon user"></i>
+                </button>
+            </div>
+        </div>
+        <div class="computer only two wide column">
+            <app-cart-status></app-cart-status>
+        </div>
+        <div class="computer only two wide column">
+            <div class="ui compact fluid menu">
+                <button class="ui fluid basic button item" routerLink="/admin">
+                    <i class="wrench icon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="ui middle aligned centered grid">
+        <div class="tablet only mobile only four wide column">
+            <a routerLinkActive="active" routerLink="/">
+                <img class="ui small centered rounded image" src="/assets/images/companyYourLogo.png">
+            </a>
+        </div>
+        <div class="tablet only mobile only four wide column">
+            <div class="ui compact fluid menu">
+                <button class="ui fluid basic button item" (click)="linkToUserPanel()">
+                    <i class="icon user"></i>
+                </button>
+            </div>
+        </div>
+        <div class="tablet only mobile only four wide column">
+            <app-cart-status></app-cart-status>
+        </div>
+        <div class="tablet only mobile only four wide column" *ngIf="isAdminView">
+            <div class="ui compact fluid menu">
+                <button class="ui fluid basic button item" routerLink="/admin">
+                    <i class="wrench icon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="ui middle aligned centered grid">
+        <div class="tablet mobile only sixteen wide column">
+            <div class="ui search">
+                <app-search-input></app-search-input>
+                <div class="results">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -36,10 +36,12 @@ export class BookDetailsComponent implements OnInit {
         })
       );
 
-      bookObservable.subscribe(data => {
-        this.book=data;
-        this.availabilityState=this.determineAvailabilityState(this.book);
-      });
+      bookObservable.subscribe(
+        data => {
+          this.book=data;
+          this.availabilityState=this.determineAvailabilityState(this.book);
+        }
+      );
   }
 
   determineAvailabilityState(book: Book): AvailabilityState {

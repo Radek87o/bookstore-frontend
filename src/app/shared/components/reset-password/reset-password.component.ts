@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CustomHttpResponse } from '../../model/custom-http-response';
 import { ResetPasswordDto } from '../../model/dto/reset-password-dto';
+import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { BookStoreValidators } from '../../utils/book-store-validators';
 
@@ -21,20 +22,33 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   isResetPasswordFailed: boolean = false;
   errorMessage: string ='';
+  isLoggedIn: boolean = false;
+  userEmail: string = '';
 
-  resetPasswordForm: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.pattern(this.emailPattern)]),
-    password: new FormControl('', [Validators.required, Validators.pattern(this.passwordPattern)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.pattern(this.passwordPattern)])  
-  },{validators: [BookStoreValidators.passwordsNonMatching]});
+  resetPasswordForm: FormGroup; 
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService,
+              private authService: AuthService, 
+              private router: Router) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.userEmail = this.authService.getUserFromLocalCache()?.email
+    }
+    this.populateForm();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  populateForm() {
+    this.resetPasswordForm = new FormGroup({
+      email: new FormControl({value: this.userEmail, disabled: this.isLoggedIn}, [Validators.required, Validators.pattern(this.emailPattern)]),
+      password: new FormControl('', [Validators.required, Validators.pattern(this.passwordPattern)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.pattern(this.passwordPattern)])  
+    },{validators: [BookStoreValidators.passwordsNonMatching]});
   }
 
   onResetPassword() {
@@ -44,6 +58,9 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userService.resetPassword(resetPassword).subscribe(
         (response : CustomHttpResponse) => {
+          if(this.isLoggedIn) {
+            this.authService.logout();
+          }
           this.router.navigateByUrl('/odzyskaj-haslo/potwierdzenie');
         },
         (err: HttpErrorResponse) => {
@@ -67,7 +84,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   }
 
   onResetForm(){
-    console.log('Inside reset')
     this.resetPasswordForm.reset();
     this.isResetPasswordFailed=false;
   }

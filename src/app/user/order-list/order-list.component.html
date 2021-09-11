@@ -1,0 +1,62 @@
+<div class="ui segment">
+    <app-not-allowed [notLoggedIn]="true" *ngIf="!loggedIn"></app-not-allowed>
+    <h3 class="ui dividing header" *ngIf="loggedIn">
+        Lista zamówień:
+    </h3>
+    <div *ngIf="loggedIn">
+        <label style="margin-right: 1em;">Liczba wyników:</label>
+        <select (change)="updatePageSize($event.target.value)">
+            <option [selected]="this.size===10">10</option>
+            <option [selected]="this.size===20">20</option>
+            <option [selected]="this.size===50">50</option>
+        </select>
+        <label style="margin-left: 1em; margin-right: 0.1em;">Strona:</label>
+        <label><b>{{page}}</b></label>
+    </div>
+    <div *ngIf="userOrders.length>0 && loggedIn" style="padding: 1em;">
+        <table class="ui padded table" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th class="four wide">Data zamówienia</th>
+                    <th class="four wide">Liczba książek</th>
+                    <th class="four wide">Cena zamówienia</th>
+                    <th class="four wide">Szczegóły zamówienia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of userOrders">
+                    <td class="middle aligned">
+                        <div class="content">
+                            <div class="ui small header">
+                                {{order.creationDate | date: 'yyyy-MM-dd HH:mm'}}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="middle aligned">
+                        <div class="content">
+                            <div class="ui small header">
+                                {{order.totalQuantity}}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="middle aligned">
+                        <div class="content">
+                            <div class="ui small header">
+                                {{order.totalPrice | number: '1.2'}} zł
+                            </div>
+                        </div>
+                    </td>
+                    <td class="middle aligned" style="text-align: center;">
+                        <button class="ui small primary button" routerLink="/uzytkownik/zamowienia/{{order.id}}">
+                           Sprawdź
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="(userOrders?.length===0 || !this.userOrders) && this.loggedIn" class="ui segment">
+        <h1 style="text-align: center;">Twoja lista zamówień jest wciąż pusta</h1>
+        <img class="ui centered large image" src="/assets/images/empty-empty-cart-icon-png.png">
+    </div>
+</div>

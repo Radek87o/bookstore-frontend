@@ -25,8 +25,8 @@ export class BooksListComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdminOrModerator();
-    this.pageNumber = this.navigationService.adminPageNumber ? this.navigationService.adminPageNumber : 1;
-    this.pageSize = this.navigationService.adminPageSize ? this.navigationService.adminPageSize : 20
+    this.pageNumber = this.navigationService.getPageNumber('adminPageNumber');
+    this.pageSize = this.navigationService.getPageSize('adminPageSize', 20);
     this.retrieveBooks();
   }
 

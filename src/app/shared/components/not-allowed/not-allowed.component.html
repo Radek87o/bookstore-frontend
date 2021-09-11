@@ -5,8 +5,11 @@
             <h2>
                 Nie masz uprawnień do dostępu do tej strony.  
             </h2>
-            <h3>
+            <h3 *ngIf="!notLoggedIn">
                 Ta treść jest dostępna wyłacznie dla administratorów i moderatorów.   
+            </h3>
+            <h3 *ngIf="notLoggedIn">
+                Ta treść jest dostępna wyłacznie dla zalogowanych użytkowników.   
             </h3>
             <div>
                 <a class="ui huge blue button" routerLink="/">Wróć do strony głównej</a>

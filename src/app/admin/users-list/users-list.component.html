@@ -4,7 +4,7 @@
         Lista użytkowników:
     </h3>
     <div class="ui fluid action concentrated input" style="margin-bottom: 1em; display: flex;" *ngIf="isAdminOrModerator">
-        <input #userInput type="text" placeholder="Szukaj książki..."
+        <input #userInput type="text" placeholder="Szukaj użytkownika..."
             (keyup.enter)="findUsersByKeyword(userInput.value)">
         <div class="ui primary button" (click)="findUsersByKeyword(userInput.value)">
             <i class="search plus icon"></i>
@@ -59,7 +59,7 @@
                     <td>
                         <div class="content">
                             <div class="ui small header" style="text-align: center;">
-                                <a routerLink="/ksiazka/{{user.id}}" class="custom-userLink">
+                                <a routerLink="/admin/uzytkownicy/edytuj/{{user.id}}" class="custom-userLink">
                                     {{user.firstName}} {{user.lastName}}
                                 </a>
                             </div>
