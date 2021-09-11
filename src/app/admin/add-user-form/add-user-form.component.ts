@@ -27,6 +27,7 @@ export class AddUserFormComponent implements OnInit {
   errorMessage: string ='';
   editMode: boolean = false;
   editedUser: User = new User();
+
   
   addUserForm: FormGroup = new FormGroup({
     firstName: new FormControl('',[
@@ -72,6 +73,8 @@ export class AddUserFormComponent implements OnInit {
           this.showAddressForm = true;
         }
         this.populateUserForm();
+        this.addUserForm.get('active').setValue(this.editedUser.active);
+        this.addUserForm.get('notLocked').setValue(this.editedUser.notLocked);
       });
     }
   }
@@ -131,9 +134,10 @@ export class AddUserFormComponent implements OnInit {
         BookStoreValidators.notOnlyWhitespace]),
       username: new FormControl(this.editedUser?.username ? this.editedUser.username : '', [Validators.minLength(3), Validators.maxLength(30)]),
       email: new FormControl({value: this.editedUser?.email, disabled: this.editMode}, [Validators.required, Validators.pattern(Patterns.EMAIL_PATTERN)]),
-      active: new FormControl(this.editedUser?.active ? this.editedUser.active : true, []),
+      active: new FormControl({value: this.editedUser?.active ? this.editedUser.active : true, 
+                            check: !this.editMode}, []),
       notLocked: new FormControl(this.editedUser?.notLocked ? this.editedUser.notLocked : true, []),
-      role: new FormControl(this.transformRole(this.editedUser?.role), []),
+      role: new FormControl(this.userService.transformRole(this.editedUser?.role), []),
       street: new FormControl(this.editedUser?.address ? this.editedUser?.address.street :'', []),
       city: new FormControl(this.editedUser?.address ? this.editedUser?.address.city :'', []),
       locationNumber: new FormControl(this.editedUser?.address ? this.editedUser?.address.locationNumber :'', []),
@@ -183,10 +187,5 @@ export class AddUserFormComponent implements OnInit {
       this.populateUserForm();
     }
     this.addingUserFailed=false;
-  }
-
-  private transformRole(rawRole: string) {
-    let role = rawRole ? rawRole : '';
-    return role.replace("ROLE_","").toLocaleLowerCase();
   }
 }

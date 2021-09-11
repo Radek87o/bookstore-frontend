@@ -1,7 +1,7 @@
 <table class="login-table" *ngIf="isLoggedIn">
     <tr>
         <td>
-            <a class="ui image label" style="margin: 1em; float: right;">
+            <a class="ui image label" style="margin: 1em; float: right;" routerLink="/uzytkownik">
                 <img [src]="profileImage">
                 {{username}}
                 <div class="detail">{{userRole}}</div>

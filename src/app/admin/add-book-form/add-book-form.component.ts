@@ -66,8 +66,6 @@ export class AddBookFormComponent implements OnInit {
     categories: new FormControl('', [Validators.required])
   })
 
-  
-
   constructor(private categoryService: CategoryService, 
               private bookService: BookService, 
               private route: ActivatedRoute,

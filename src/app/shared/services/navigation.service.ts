@@ -1,62 +1,48 @@
 import { Injectable } from '@angular/core';
+import { Rating } from '../model/rating';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
 
-  private currentPageNumber=1;
-  private currentPageSize=24;
-
-  private currentPromoPageNumber=1;
-  private currentPromoPageSize=24;
-
-  private currentAdminPageNumber=1;
-  private currentAdminPageSize=20;
-
   constructor() { }
 
   updatePagination(theCurrentPageNumber: number, theCurrentPageSize: number) {
-    this.currentPageNumber=theCurrentPageNumber;
-    this.currentPageSize=theCurrentPageSize;
+    sessionStorage.setItem("homePageNumber", theCurrentPageNumber.toString());
+    sessionStorage.setItem("homePageSize", theCurrentPageSize.toString());
   }
 
   updatePromoPagination(theCurrentPageNumber: number, theCurrentPageSize: number) {
-    this.currentPromoPageNumber=theCurrentPageNumber;
-    this.currentPromoPageSize=theCurrentPageSize;
+    sessionStorage.setItem("promoPageNumber", theCurrentPageNumber.toString());
+    sessionStorage.setItem("promoPageSize", theCurrentPageSize.toString());
   }
 
   updateAdminPagination(theCurrentPageNumber: number, theCurrentPageSize: number) {
-    this.currentAdminPageNumber=theCurrentPageNumber;
-    this.currentAdminPageSize=theCurrentPageSize;
+    sessionStorage.setItem("adminPageNumber", theCurrentPageNumber.toString());
+    sessionStorage.setItem("adminPageSize", theCurrentPageSize.toString());
   }
 
   resetPagination() {
-    this.currentPageNumber=1;
-    this.currentPageSize=24;
+    sessionStorage.setItem("homePageNumber", "1")
+    sessionStorage.setItem("homePageSize", "24")
   }
 
-  get pageNumber() {
-    return this.currentPageNumber;
+  getPageNumber(itemName: string) : number {
+    let pageNumber = sessionStorage.getItem(itemName)
+    if(pageNumber) {
+      return parseInt(pageNumber);
+    } else {
+      return 1;
+    }
   }
 
-  get pageSize() {
-    return this.currentPageSize;
-  }
-
-  get promoPageNumber() {
-    return this.currentPromoPageNumber;
-  }
-
-  get promoPageSize() {
-    return this.currentPromoPageSize;
-  }
-
-  get adminPageNumber() {
-    return this.currentAdminPageNumber;
-  }
-
-  get adminPageSize() {
-    return this.currentAdminPageSize;
+  getPageSize(itemName: string, defaultSize: number): number {
+    let pageSize = sessionStorage.getItem(itemName)
+    if(pageSize) {
+      return parseInt(pageSize);
+    } else {
+      return defaultSize;
+    }
   }
 }

@@ -1,0 +1,89 @@
+<div class="ui segment">
+    <app-not-allowed *ngIf="!loggedIn"></app-not-allowed>
+    <div class="ui middle aligned centered stackable concentrated grid" *ngIf="loggedIn">
+        <div class="ui item four wide column" style="text-align: center; align-self: baseline !important;">
+            <div class="ui medium image">
+                <img [src]="loggedUser.profileImageUrl">
+            </div>
+            <div class="ui label" style="margin-top: 2em; text-align: center; width: 100%;">
+                <i class="user icon"></i>
+                Rola: {{populateRole(loggedUser)}}
+            </div>
+            <div class="ui label" style="margin-top: 2em; width: 100%;" *ngIf="loggedUser.active">
+                <i class="toggle on icon" style="color: green;"></i>
+                Konto aktywne
+            </div>
+            <div class="ui label" style="margin-top: 2em; width: 100%;" *ngIf="!loggedUser.active">
+                <i class="toggle off icon" style="color: red;"></i>
+                Konto nieaktywne
+            </div>
+            <div class="ui label" style="margin-top: 2em; width: 100%;" *ngIf="loggedUser.notLocked">
+                <i class="lock open icon" style="color: green;"></i>
+                Konto odblokowane
+            </div>
+            <div class="ui label" style="margin-top: 2em; width: 100%;" *ngIf="!loggedUser.notLocked">
+                <i class="lock icon" style="color: red;"></i>
+                Konto nieaktywne
+            </div>
+        </div>
+        <div class="twelve wide column">
+            <form [formGroup]="editCurrentUserForm" (ngSubmit)="onSubmit()" *ngIf="loggedIn">
+                <div class="ui form error success">
+                    <h4 class="ui dividing header">Dane osobowe</h4>
+                    <div class="field register-field">
+                        <app-input [control]="editCurrentUserForm.get('firstName')" label="Imię" placeholder="Wpisz imię"></app-input>
+                    </div>
+                    <div class="field register-field">
+                        <app-input [control]="editCurrentUserForm.get('lastName')" label="Nazwisko" placeholder="Wpisz nazwisko"></app-input>
+                    </div>
+                    <div class="field register-field">
+                        <app-input [control]="editCurrentUserForm.get('username')" label="Nazwa użytkownika" placeholder="Wpisz nazwę użytkownika"></app-input>    
+                    </div>
+                    <div class="field register-field">
+                        <app-input [control]="editCurrentUserForm.get('email')" label="Email" placeholder="Wpisz adres email"></app-input>    
+                    </div>
+                    <div class="field" *ngIf="!isAddressGiven">
+                        <div class="ui checkbox">
+                          <input type="checkbox" (change)="changeAddressDataVisibility($event)" [checked]="showAddressForm">
+                          <label><b>Dodaj dane adresowe (opcjonalnie)</b></label>
+                        </div>
+                    </div>
+                    <div *ngIf="isAddressGiven || showAddressForm">
+                        <h4 class="ui dividing header">Dane adresowe</h4>
+                        <div class="field register-field">
+                            <app-input [control]="editCurrentUserForm.get('city')" label="Miejscowość" placeholder="Wpisz nazwę miejscowości"></app-input>
+                        </div>
+                        <div class="field register-field">
+                            <app-input [control]="editCurrentUserForm.get('street')" label="Ulica" placeholder="Wpisz nazwę ulicy"></app-input>
+                        </div>
+                        <div class="two fields">
+                            <div class="field register-field">
+                                <app-input [control]="editCurrentUserForm.get('locationNumber')" label="Numer domu/mieszkania" placeholder="Wpisz numer domu/mieszkania"></app-input>
+                            </div>
+                            <div class="field register-field">
+                                <app-input [control]="editCurrentUserForm.get('zipCode')" label="Kod pocztowy (dd-ddd)" placeholder="Wpisz kod pocztowy"></app-input>
+                            </div>
+                        </div>
+                        <div class="ui small error message" 
+                                *ngIf="editCurrentUserForm.errors?.nonCompletedAddress">
+                            Jeśli chcesz dodać adres, żadne z pól nie może być puste
+                        </div>
+                    </div>
+                    <div class="ui small error message" 
+                    *ngIf="userEditionFailed && isUsernameTaken()">
+                        Podana nazwa użytkownika już istnieje w bazie danych
+                    </div>
+                    <div class="ui small error message" 
+                            *ngIf="userEditionFailed && !isUsernameTaken()">
+                        Wystąpił niespodziewany błąd - skontaktuj się z administratorem 
+                    </div>
+                    <div style="text-align: center; margin-top: 1em;">
+                        <button class="positive ui submit formButton button" [disabled]="editCurrentUserForm.invalid" type="submit">Edytuj dane</button>
+                        <button class="ui formButton active button" (click)="resetForm()" type="button">Anuluj</button>
+                        <button class="ui formButton active black button" type="button" routerLink="/uzytkownik">Wróć</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

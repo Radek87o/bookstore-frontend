@@ -55,12 +55,13 @@ export class CartService {
   decrementQuantity(cartItem: CartItem) {
     cartItem.quantity--;
 
+    this.addCartItemsToLocalCache(this.cartItems)
     if(cartItem.quantity===0) {
       this.removeFromCartItem(cartItem);
+      this.addCartItemsToLocalCache(this.cartItems)
     } else {
       this.computeCartTotals();
-    }
-    this.addCartItemsToLocalCache(this.cartItems) 
+    } 
   }
 
   removeFromCartItem(cartItem: CartItem) {
@@ -73,7 +74,7 @@ export class CartService {
   }
 
   private addCartItemsToLocalCache(items: CartItem[]) {
-    localStorage.setItem('cart', JSON.stringify(items));
+        localStorage.setItem('cart', JSON.stringify(items));
   }
 
   getCartItemsFromLocalCache() : CartItem[] {

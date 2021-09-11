@@ -1,0 +1,54 @@
+<div class="ui segment">
+    <app-not-allowed [notLoggedIn]="true" *ngIf="!loggedIn"></app-not-allowed>
+    <h3 class="ui dividing header" *ngIf="loggedIn">
+        Lista zamówień:
+    </h3>
+    <table class="ui padded table" *ngIf="orderItems?.length>0">
+        <thead>
+            <tr class="text-centered">
+                <th class="two wide"></th>
+                <th class="six wide">Tytuł</th>
+                <th class="four wide">Liczba sztuk</th>
+                <th class="four wide">Cena Jednostkowa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of orderItems">
+                <td style="align-content: center;">
+                    <img [src]="item.imageUrl" class="ui rounded image" style="width: 70px; margin: 2px; margin-left: 10px;"/>
+                </td>
+                <td class="middle aligned" style="text-align: center;">
+                    <div class="content">
+                        <div class="ui small header">
+                            <a routerLink="/ksiazka/{{item.bookId}}" style="color: black;">{{item.title}}</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="middle aligned" style="text-align: center;">
+                    <div class="content">
+                        {{item.quantity}}
+                    </div>
+                </td>
+                <td class="middle aligned" style="text-align: center;">
+                    <div class="content header">
+                        <b>{{item.unitPrice | priceDisplay}} zł</b>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="2">
+                    <div class="ui right floated">
+                        <div class="ui small header" style="text-align: right;">Liczba zamówionych produktów: <b>{{totalQuantity}}</b></div>
+                        <div class="ui small header" style="text-align: right;">Cena łączna zamówienia: <b>{{totalPrice | priceDisplay}} zł</b></div>
+                        <button class="ui secondary button" type="button" style="float: right;" routerLink="/uzytkownik/zamowienia">
+                            Wróć
+                        </button>
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

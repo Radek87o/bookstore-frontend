@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms'
 
-import { CardComponent } from './card/card.component';
-import { TitleTrimmerPipe } from './title-trimmer.pipe';
-import { PriceDisplayPipe } from './price-display.pipe';
+import { CardComponent } from './components/card/card.component';
+import { TitleTrimmerPipe } from './utils/title-trimmer.pipe';
+import { PriceDisplayPipe } from './utils/price-display.pipe';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { RatingDecimalComponent } from './components/rating-decimal/rating-decimal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';

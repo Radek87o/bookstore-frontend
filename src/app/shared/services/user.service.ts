@@ -52,6 +52,10 @@ export class UserService {
     return this.http.put<User>(`${this.baseUrl}/${userId}`, user, {params: queryParams})
   }
 
+  updateOwnAccount(user: SignupDto, userId: string) : Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/own/${userId}`, user)
+  }
+
   getUser(id: string) : Observable<User> {
     return this.http.get<User>(`${this.baseUrl}/${id}`);
   }
@@ -90,6 +94,11 @@ export class UserService {
                   .set('size', sizeParam);      
     const searchUrl = `${this.baseUrl}/search`;
     return this.listUsers(searchUrl, params)
+  }
+
+  transformRole(rawRole: string) {
+    let role = rawRole ? rawRole : '';
+    return role.replace("ROLE_","").toLocaleLowerCase();
   }
 
   private getPaginatedResults(url: string, page: number, size: number) : Observable<UsersListResponse> {

@@ -3,7 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Comment } from '../model/comment';
-import { CommentDto } from '../model/dto/comment-dto'
+import { CommentDto } from '../model/dto/comment-dto';
+import { environment } from '../../../environments/environment';
 
 export interface CommentListResponse {
   content: Comment[];
@@ -20,7 +21,7 @@ export interface CommentListResponse {
 })
 export class CommentService {
 
-  private baseUrl: string = 'http://localhost:8080/api/comments';
+  private baseUrl: string = `${environment.apiUrl}/api/comments`;
 
 
   constructor(private http: HttpClient) { }

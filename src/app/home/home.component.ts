@@ -38,8 +38,8 @@ export class HomeComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.pageNumber = this.navigationService.pageNumber ? this.navigationService.pageNumber : 1;
-    this.pageSize = this.navigationService.pageSize ? this.navigationService.pageSize : 24;
+    this.pageNumber = this.navigationService.getPageNumber('homePageNumber');
+    this.pageSize = this.navigationService.getPageSize('homePageSize', 24);
     this.listBooks();
   }
 

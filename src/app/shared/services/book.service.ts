@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book } from '../model/book'
 import { BookDto } from '../model/dto/book-dto';
+import { environment } from '../../../environments/environment';
 
 export interface BooksListResponse {
   content: Book[];
@@ -19,7 +20,7 @@ export interface BooksListResponse {
 })
 export class BookService {
 
-  private baseUrl: string = 'http://localhost:8080/api/books';
+  private baseUrl: string = `${environment.apiUrl}/api/books`;
 
   constructor(private http: HttpClient) { }
 

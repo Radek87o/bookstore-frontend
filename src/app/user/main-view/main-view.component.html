@@ -1,0 +1,41 @@
+<div class="ui segment">
+    <app-not-allowed [notLoggedIn]="true" *ngIf="!isLoggedIn"></app-not-allowed>
+    <h3 class="ui dividing header" *ngIf="isLoggedIn">
+      Panel Użytkownika
+    </h3>
+    <div class="ui placeholder segment" style="margin-top: 5em;" *ngIf="isLoggedIn">
+      <div class="ui three column stackable center aligned grid">
+        <div class="middle aligned row">
+          <div class="column">
+            <div class="ui icon header">
+              <i class="user icon"></i>
+              Zmień dane
+            </div>
+            <div class="field">
+              <div class="ui primary button" routerLink="/uzytkownik/edytuj">
+                Edytuj
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="ui icon header">
+              <i class="edit icon"></i>
+              Resetuj hasło
+            </div>
+            <div class="ui primary button" routerLink="/odzyskaj-haslo">
+              Zmień
+            </div>
+          </div>
+          <div class="column">
+            <div class="ui icon header">
+              <i class="shopping cart icon"></i>
+              Lista zamówień
+            </div>
+            <div class="ui primary button" routerLink="/uzytkownik/zamowienia">
+              Sprawdź
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
