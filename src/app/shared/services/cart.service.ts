@@ -16,6 +16,9 @@ export class CartService {
   constructor(private notificationsService: NotificationsService) { }
 
   addToCart(newCartItem: CartItem) {
+    if(this.cartItems?.length === 0 && this.getCartItemsFromLocalCache()?.length>0) {
+      this.cartItems = this.getCartItemsFromLocalCache();
+    }
     let alreadyExistsInCart: boolean = false;
     let existingCartItem: CartItem = undefined;
 
@@ -30,7 +33,9 @@ export class CartService {
       this.cartItems?.push(newCartItem);
     }
     this.notificationsService.addSuccess(`Dodano książkę do koszyka`)
-    this.addCartItemsToLocalCache(this.cartItems);
+    if(this.cartItems?.length>0) {
+      this.addCartItemsToLocalCache(this.cartItems);
+    }
     this.computeCartTotals();
   }
 
@@ -78,14 +83,14 @@ export class CartService {
     if(!currentCacheCartItems) {
       this.removeCartItemsFromLocalCache()
     }
-    localStorage.setItem('cart', JSON.stringify(items));
+    sessionStorage.setItem('cart', JSON.stringify(items));
   }
 
   getCartItemsFromLocalCache() : CartItem[] {
-    return JSON.parse(localStorage.getItem('cart'));
+    return JSON.parse(sessionStorage.getItem('cart'));
   }
 
   removeCartItemsFromLocalCache() {
-    localStorage.removeItem('cart');
+    sessionStorage.removeItem('cart');
   }
 }
