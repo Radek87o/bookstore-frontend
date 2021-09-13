@@ -20,7 +20,15 @@
             <option [selected]="this.pageSize===72">72</option>
         </select>
     </div>
-    <div class="ui stackable six cards">
+    <div *ngIf="books?.length===0">
+        <div class="not-found-info">
+            <i class="massive search minus icon"></i>
+            <h2>
+                Brak wyników spełniających wybrane kryteria
+            </h2>
+        </div>  
+    </div>
+    <div class="ui stackable six cards" *ngIf="books?.length>0">
         <ng-container>
             <app-card class="ui fluid card" *ngFor="let book of books" [book]="book"></app-card>           
         </ng-container>
