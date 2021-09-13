@@ -74,7 +74,11 @@ export class CartService {
   }
 
   private addCartItemsToLocalCache(items: CartItem[]) {
-        localStorage.setItem('cart', JSON.stringify(items));
+    let currentCacheCartItems = this.getCartItemsFromLocalCache();
+    if(!currentCacheCartItems) {
+      this.removeCartItemsFromLocalCache()
+    }
+    localStorage.setItem('cart', JSON.stringify(items));
   }
 
   getCartItemsFromLocalCache() : CartItem[] {
