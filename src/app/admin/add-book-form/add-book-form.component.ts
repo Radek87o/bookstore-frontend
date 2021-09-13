@@ -101,12 +101,12 @@ export class AddBookFormComponent implements OnInit {
         BookStoreValidators.notOnlyWhitespace
       ]),
       subtitle: new FormControl(this.editedBook ? this.editedBook.subtitle : '', [Validators.minLength(2)]),
-      authorFirstName: new FormControl(this.editedBook.author ? this.editedBook.author.firstName : '', [
+      authorFirstName: new FormControl({value: this.editedBook.author ? this.editedBook.author.firstName : '', disabled: true}, [
         Validators.required, 
         Validators.minLength(2), 
         Validators.maxLength(30), 
         BookStoreValidators.notOnlyWhitespace]),
-      authorLastName: new FormControl(this.editedBook.author ? this.editedBook.author.lastName : '', [
+      authorLastName: new FormControl({ value: this.editedBook.author ? this.editedBook.author.lastName : '', disabled: true}, [
         Validators.required, 
         Validators.minLength(2), 
         Validators.maxLength(30), 
