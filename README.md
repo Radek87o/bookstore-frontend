@@ -4,24 +4,27 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. In order to run locally - replace in package.json a value of "scripts.start" : "node server.js" with "ng serve"
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## For an end-user
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+App is deployed to https://bookstore-rornat.herokuapp.com/. 
 
-## Running end-to-end tests
+In order to register:
+1. Please click button 'Zaloguj' or click a button with user icon
+2. Click the link "Nie masz konta - zarejestruj się"
+3. Fill in the registration form
+4. Activation mail is send to the given email address after successful registration
+5. Check your email and find the message from rornat.developer@gmail.com regarding account activation and click the activation link inside a mail
+6. After click you are directed to activation confirmation page and you can already sign in to your account
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+In order to sign in as admin (to gain an access to all the app's functionalities) - use the following credentials:
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
+username: bookstore-admin
+password: Bookstore8*
+```
